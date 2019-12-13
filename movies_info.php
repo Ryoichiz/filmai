@@ -1,4 +1,5 @@
 <?php
+if(isset($_GET['ID'])){
 	session_start();
 	include('includes/loadControl.php');
 	$controller = new MainPageController();
@@ -18,17 +19,13 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT * FROM filmas";
+        $ID = mysqli_real_escape_string($conn, $_GET['ID']);
+        $sql = "SELECT * FROM filmas WHERE id='$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
+        $row = mysqli_fetch_array($result);
+    }else
+    header('Location: movies.php');
 
-        /*
-        if (mysqli_num_rows($result) > 0)
-        {
-            while($row = $result->fetch_assoc())
-            {
-                print_r($row);
-            }
-        } */
 
 ?>
 <!DOCTYPE html>
@@ -53,18 +50,10 @@
             ?>
         </div>
     </nav>
-    <div id='div-names'>
-    <?php
-    	if (mysqli_num_rows($result) > 0)
-        {
-            while($row = $result->fetch_assoc())
-            {
-                echo "<a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><br>\n";
-            }
-        }else {
-        	echo "<h2>No Titles to display</h2>";
-        }
-     ?>
- 	</div>
+    <div id='div-info'>
+        <h1><?php echo $row['pavadinimas'] ?></h1>
+        <img src='uploads/<?php echo $row['paveiksliukas'] ?>'>
+    </div>
+    
 	</body>
 </html> 
