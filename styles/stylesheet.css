@@ -1,7 +1,12 @@
 #div-names{
-	margin-left: 120px;
-	margin-top: 30px;	
+    margin-left: 120px;
+    margin-top: 40px;
+    position:relative;
 }
 #div-info{
 	text-align: center;
+}
+#inline{
+	display: inline-block;
+	width: 20.333%
 }

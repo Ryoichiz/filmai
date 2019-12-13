@@ -53,6 +53,10 @@ if(isset($_GET['ID'])){
     <div id='div-info'>
         <h1><?php echo $row['pavadinimas'] ?></h1>
         <img src='uploads/<?php echo $row['paveiksliukas'] ?>'>
+        <h2><?php echo $row['kaina'] ?></h2>
+        <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
+         <iframe width="420" height="315" src='<?php echo $videourl ?>' allowfullscreen> </iframe> 
+         <?php echo $videourl; ?>
     </div>
     
 	</body>

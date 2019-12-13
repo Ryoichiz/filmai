@@ -57,12 +57,19 @@
     <?php
     	if (mysqli_num_rows($result) > 0)
         {
+            $moviesInRow = 0;
             while($row = $result->fetch_assoc())
             {
-                echo "<a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><br>\n";
+                if($moviesInRow > 3){
+                    echo "<br>";
+                    $moviesInRow = 0;
+                } 
+                echo '<div id=\'inline\'><center><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200"></center><br>';
+                echo "<center><a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><center> </div>";
+                $moviesInRow++;
             }
         }else {
-        	echo "<h2>No Titles to display</h2>";
+            echo "<h2>No Titles to display</h2>";
         }
      ?>
  	</div>
