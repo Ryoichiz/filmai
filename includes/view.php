@@ -10,7 +10,7 @@ class View
 
 public static function printNavbar($location)
     {
-        echo '<a class="navbar-brand" href="index.php">Gaming Forumas  </a>
+        echo '<a class="navbar-brand" href="index.php">Filmų nuoma  </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,16 +19,18 @@ public static function printNavbar($location)
             <ul class="navbar-nav mr-auto">';
         self::printNavbarItem("Namai", "index.php", $location);
         if($_SESSION['uzblokuotas'] !== '1') {
-            self::printNavbarItem("Forumas", "forum.php", $location);
-            self::printNavbarItem("Galerija", "gallery.php", $location);
+            self::printNavbarItem("Filmai", "movies.php", $location);
+            
         }
         if ($_SESSION['role'] == "0") {
+
             self::printNavbarItem("Registruotis", "register.php", $location);
             self::printNavbarItem("Prisijungti", "login.php", $location);
         } else {
             if ($_SESSION['role'] >= 2 && $_SESSION['uzblokuotas'] !== '1') {
                 self::printNavbarItem("Valdymas", "adminpanel.php", $location);
             }
+            self::printNavbarItem("Krepšelis", "gallery.php", $location);
             self::printNavbarItem("Nustatymai", "settings.php", $location);
             self::printNavbarItem("Atsijungti", "logout.php", $location);
         }
@@ -63,6 +65,21 @@ public static function printNavbar($location)
         function printIndexPage()
     {
         echo '<h1>Sveiki atvykę į filmu nuoma!</h1>';
+    }
+
+        function printSuccess($text)
+    {
+        echo '<div class="alert alert-success" role="alert">' . $text . '</div>';
+    }
+
+    function printDanger($text)
+    {
+        echo '<div class="alert alert-danger" role="alert">' . $text . '</div>';
+    }
+
+    function printWarning($text)
+    {
+        echo '<div class="alert alert-warning" role="alert">' . $text . '</div>';
     }
 }
 

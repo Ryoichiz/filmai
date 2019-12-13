@@ -10,7 +10,7 @@ class MainPageController extends MainController implements iController
 
     public function getTitle()
     {
-        echo 'Gaming forum - pagrindinis puslapis!';
+        echo 'Filmų - pagrindinis puslapis!';
     }
 
     public function printPageView()
