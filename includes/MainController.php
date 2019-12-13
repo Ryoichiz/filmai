@@ -18,6 +18,10 @@ class MainController {
         View::printNavbar($location);
     }
 
+    public static function printTopBar($location)
+    {
+        View::printTop($location);
+    }
     // gets View (front-end) entity.
     protected function getView()
     {

@@ -7,6 +7,13 @@ class View
 
     }
 
+public static function printTop($location)
+{
+    echo '<div class="jumbotron text-center" style="margin-bottom:0">
+    <h1>My First Bootstrap 4 Page</h1>
+    <p>Resize this responsive page to see the effect!</p> 
+    </div>';
+}
 
 public static function printNavbar($location)
     {
@@ -31,7 +38,7 @@ public static function printNavbar($location)
                 self::printNavbarItem("Valdymas", "adminpanel.php", $location);
             }
             self::printNavbarItem("Krepšelis", "gallery.php", $location);
-            self::printNavbarItem("Nustatymai", "settings.php", $location);
+            self::printNavbarItem("Nustatymai", "profile.php", $location);
             self::printNavbarItem("Atsijungti", "logout.php", $location);
         }
         if( $_SESSION['busena'] !== 'Užblokuotas') {
@@ -126,6 +133,50 @@ public static function printNavbar($location)
                 <a href="remindpass.php">Pamiršai slaptažodį?</a>
         </form>';
     }
+
+        public function printSettingsForm($username, $surname, $email)
+    {
+        echo '
+            <form method=\'POST\' class=\'mainForm\'>
+                <h1>Profilio nustatymai</h1>
+                <div class="form-group">
+                    <label for="inputFor">Slapyvardis*</label>
+                    <input type="text" class="form-control" id="inputFor" value="'.$username.'" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="inputFor">Pavardė</label>
+                    <input type="text" name="surname" class="form-control" id="inputFor" placeholder="Pavardė" value="'.$surname.'">
+                </div>
+                <div class="form-group">
+                    <label for="inputFor">El. pašto adresas*</label>
+                    <input type="email" name="email" class="form-control" id="inputFor" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$email.'">
+                </div>
+                </div>
+                    <button type="submit" name="saveSettingsBtn" class="btn btn-primary">Išsaugoti nustatymus</button>
+            </form>';
+    }
+
+        public function printChangePasswordForm()
+    {
+        echo '<form method=\'POST\' class=\'mainForm\'>
+                <h1>Slaptažodžio keitimo forma</h1>
+                <div class="form-group">
+                    <label for="inputFor">Dabartinis slaptažodis</label>
+                    <input type="password" name="oldPasswd" class="form-control" id="inputFor" placeholder="Senas slaptažodis">
+                </div>
+                <div class="form-group">
+                    <label for="inputFor">Naujas slaptažodis</label>
+                    <input type="password" name="newPasswd" class="form-control" id="inputFor" placeholder="Naujas slaptažodis">
+                </div>
+                <div class="form-group">
+                    <label for="inputFor">Pakartokite naują slaptažodį</label>
+                    <input type="password"  name="repeatNewPasswd" class="form-control" id="inputFor" placeholder="Naujas slaptažodis">
+                </div>
+                <button type="submit" name="changePasswdBtn" class="btn btn-danger">Keisti slaptažodį</button>
+            </form>';
+    }
+
+
 
 }
 

@@ -116,6 +116,26 @@ class Model {
         }
     }
 
+    public function updateUser($username, $newEmail, $newSurname)
+    {
+        $username = $this->secureInput($username);
+        $newEmail = $this->secureInput($newEmail);
+        $newSurname = $this->secureInput($newSurname);
+
+        $sql = "UPDATE naudotojas SET el_pastas='$newEmail',
+         pavarde='$newSurname' WHERE vardas='$username'";
+
+        if($this->conn->query($sql))
+        {
+            return true;
+        }
+        else
+        {
+            echo mysqli_error($this->conn);
+            return false;
+        }
+    }
+
         public function setDefaultSessions()
     {
         // If ID is not set, it means we have to set default sessions, instead of rewriting whole function, I call logout() function. It does the same thing.
@@ -195,6 +215,33 @@ class Model {
         $input = mysqli_real_escape_string($this->conn, $input);
         $input = htmlspecialchars($input);
         return $input;
+    }
+
+        public function getDataByString($table, $column, $value)
+    {
+        $table = $this->secureInput($table);
+        $column = $this->secureInput($column);
+        $value = $this->secureInput($value);
+        $sql = "SELECT * FROM ".$table." WHERE ".$column."='".$value."'";
+        $result = mysqli_query($this->conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                return $row;
+            }
+        }
+        else
+        {
+            echo mysqli_error($this->conn);
+            return false;
+        }
+    }
+
+        public function returnConn()
+    {
+        return $this->conn;
     }
 }
 ?>
