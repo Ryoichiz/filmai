@@ -34,8 +34,8 @@ public static function printNavbar($location)
             self::printNavbarItem("Registruotis", "register.php", $location);
             self::printNavbarItem("Prisijungti", "login.php", $location);
         } else {
-            if ($_SESSION['role'] >= 2 && $_SESSION['busena'] !== 'Užblokuotas') {
-                self::printNavbarItem("Valdymas", "adminpanel.php", $location);
+            if ($_SESSION['role'] == "Administratorius" && $_SESSION['busena'] !== 'Užblokuotas') {
+                self::printNavbarItem("Valdymas", "admin.php", $location);
             }
             self::printNavbarItem("Krepšelis", "gallery.php", $location);
             self::printNavbarItem("Nustatymai", "profile.php", $location);
@@ -174,6 +174,59 @@ public static function printNavbar($location)
                 </div>
                 <button type="submit" name="changePasswdBtn" class="btn btn-danger">Keisti slaptažodį</button>
             </form>';
+    }
+
+    public function printAdminPanel($users)
+    {
+        echo '
+                <ul class="list-group">';
+                 echo '<li class="list-group-item">
+                   Prisijungusio valdytojo vardas: '.$_SESSION['vardas'].'
+                 </li>';
+        if ($users) {
+
+            while ($row = mysqli_fetch_assoc($users)) {
+                echo'<li class="list-group-item">
+                '.$row['vardas'].' 
+                <form class="btn">
+                <input type="hidden" name="id" value="'.$row['id'].'">
+                <button type="submit" name="uztildytas" value="1" class="btn btn-warning btn-sm">'; if($row['uztildytas'] == '0') { echo 'uztildyti'; } else { echo 'atitildyti'; }  echo '</button>
+                </form>';
+                if($_SESSION['role'] == "Administratorius") {
+                    echo '
+                <form class="btn">
+                <input type="hidden" name="id" value="' . $row['id'] . '">
+                <button type="submit" name="uzblokuotas" value="1" class="btn btn-danger btn-sm">'; if($row['uzblokuotas'] == '0') { echo 'uzblokuoti'; } else { echo 'atblokuoti'; }  echo '</button>
+                </form>
+                <a href="edituser.php?id=' . $row['id'] . '"><button type="button" class="btn btn-primary btn-sm">Redaguoti naudotoją</button> </a>
+                <form class="btn">
+                <select class="btn btn-light" name="role">
+                ';
+
+                    if ($row['role'] == "Administratorius") {
+                        echo '<option selected value = "1" > Naudotojas</option >
+                          <option value = "2" > Administratorius</option >
+                     </select>
+                ';
+                    } else if ($row['role'] == "Naudotojas") {
+                        echo '<option value = "1" > Naudotojas</option >
+                          <option selected value = "2" > Administratorius</option >
+                     </select>
+                ';
+                    }
+
+                    echo '
+                
+                <input type="hidden" name="id" value="' . $row['id'] . '">
+                <button type="submit" class="btn btn-primary btn-sm">Pakeisti rolę</button>
+                </form>
+             </li>';
+                }
+
+            }
+        }
+
+        echo '</ul>';
     }
 
 

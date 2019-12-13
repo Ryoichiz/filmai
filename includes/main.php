@@ -95,8 +95,8 @@ class Model {
                     $_SESSION['vardas'] = $row['vardas'];
                     $_SESSION['slaptazodis'] = $row['slaptazodis'];
                     $_SESSION['el_pastas'] = $row['el_pastas'];
-                    $_SESSION['role'] = $row['fk_naudotojo_busena'];
-                    $_SESSION['busena'] = $row['fk_role'];
+                    $_SESSION['role'] = $row['fk_role'];
+                    $_SESSION['busena'] = $row['fk_naudotojo_busena'];
                     //$date = date('Y-m-d H:i:s');
                     //$sql = "UPDATE naudotojai SET paskutini_karta_prisijunges='$date' WHERE slapyvardis='$username'";
                     //$this->conn->query($sql);
@@ -210,6 +210,58 @@ class Model {
         }
     }
 
+        public function changePasswd($username, $password, $newPasswd, $repeatNewPasswd)
+    {
+        $conn = $this->conn;
+        $username = $this->secureInput($username);
+        $password = $this->secureInput($password);
+        $newPasswd = $this->secureInput($newPasswd);
+        $repeatNewPasswd = $this->secureInput($repeatNewPasswd);
+
+        $sql = "SELECT * FROM naudotojas WHERE vardas='$username'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                if(password_verify($password, $row['slaptazodis']))
+                {
+                    if ($newPasswd !== $repeatNewPasswd) {
+                        echo("<script>location.href = 'settings.php?error=passwcheck';</script>");
+                        exit();
+                    } else {
+                        $sql = "SELECT vardas FROM naudotojas WHERE vardas=?";
+                        $stmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                            echo("<script>location.href = 'settings.php?error=sqlerror';</script>");
+                            exit();
+                        } else {
+                            mysqli_stmt_bind_param($stmt, "s", $username);
+                            mysqli_stmt_execute($stmt);
+                            $sql = ("SET CHARACTER SET utf8");
+                            $conn->query($sql);
+                            $hashedPwd = password_hash($newPasswd, PASSWORD_DEFAULT);
+                            $sql = "UPDATE naudotojas SET slaptazodis=? WHERE vardas=?";
+                            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                return false;
+                            } else {
+                                mysqli_stmt_bind_param($stmt, "ss", $hashedPwd, $username);
+                                mysqli_stmt_execute($stmt);
+                                return true;
+                            }
+                        }
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
         public function secureInput($input)
     {
         $input = mysqli_real_escape_string($this->conn, $input);
@@ -231,6 +283,23 @@ class Model {
             {
                 return $row;
             }
+        }
+        else
+        {
+            echo mysqli_error($this->conn);
+            return false;
+        }
+    }
+
+        public function getData($table)
+    {
+        $table = $this->secureInput($table);
+        $sql = "SELECT * FROM ".$table;
+        $result = mysqli_query($this->conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            return $result;
         }
         else
         {
