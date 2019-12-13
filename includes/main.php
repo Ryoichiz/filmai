@@ -106,7 +106,7 @@ class Model {
         } else {
             $sql = "SELECT * FROM naudotojas WHERE vardas=? AND slaptazodis=?;";
             $stmt = mysqli_stmt_init($conn);
-            printf($stmt);
+            //printf($stmt);
             if (!mysqli_stmt_prepare($stmt, $sql)) {
                 
                 return false;
