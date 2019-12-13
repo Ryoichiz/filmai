@@ -34,7 +34,7 @@ class Model {
         $_SESSION['slaptazodis'] = "0";
         $_SESSION['el_pastas'] = "0";
         $_SESSION['role'] = "0";
-        $_SESSION['uzblokuotas'] = "0";
+        $_SESSION['busena'] = "Neutralus";
 
         return true;
     }
@@ -73,6 +73,45 @@ class Model {
             else
             {
                 $this->logoutMe();
+            }
+        }
+    }
+
+        public function loginMe($username, $password)
+    {
+        $username = $this->secureInput($username);
+        $password = $this->secureInput($password);
+
+        $sql = "SELECT * FROM naudotojas WHERE vardas='$username'";
+        $result = $this->conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                if(password_verify($password, $row['slaptazodis']))
+                {
+                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['vardas'] = $row['vardas'];
+                    $_SESSION['slaptazodis'] = $row['slaptazodis'];
+                    $_SESSION['el_pastas'] = $row['el_pastas'];
+                    $_SESSION['role'] = $row['fk_naudotojo_busena'];
+                    $_SESSION['busena'] = $row['fk_role'];
+                    //$date = date('Y-m-d H:i:s');
+                    //$sql = "UPDATE naudotojai SET paskutini_karta_prisijunges='$date' WHERE slapyvardis='$username'";
+                    //$this->conn->query($sql);
+                    //$sql = "INSERT INTO naudotoju_ipai (ip, paskutinis_prisijungimas, fk_naudotojas) 
+                            //VALUES (".$this->getUserIpAddr().", ".$date.", ".$row['id'].") 
+                            //ON DUPLICATE KEY UPDATE 
+                            //ip=VALUES(ip),
+                            //paskutinis_prisijungimas=VALUES(paskutinis_prisijungimas)";
+                    //$this->conn->query($sql);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
@@ -138,10 +177,10 @@ class Model {
                         } else {
                             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
                             $id = 0;
-                            $role = 1;
-                            $blocked = 1;
+                            $role = "Naudotojas";
+                            $blocked = "Neutralus";
                             $date = date('Y-m-d H:i:s');
-                            mysqli_stmt_bind_param($stmt, "isssssii", $id, $username, $surname, $hashedPwd, $el_pastas, $date, $blocked, $role);
+                            mysqli_stmt_bind_param($stmt, "isssssss", $id, $username, $surname, $hashedPwd, $el_pastas, $date, $blocked, $role);
                             mysqli_stmt_execute($stmt);
                             return true;
                         }

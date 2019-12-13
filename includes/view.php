@@ -18,7 +18,7 @@ public static function printNavbar($location)
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">';
         self::printNavbarItem("Namai", "index.php", $location);
-        if($_SESSION['uzblokuotas'] !== '1') {
+        if($_SESSION['busena'] !== 'Užblokuotas') {
             self::printNavbarItem("Filmai", "movies.php", $location);
             
         }
@@ -27,14 +27,14 @@ public static function printNavbar($location)
             self::printNavbarItem("Registruotis", "register.php", $location);
             self::printNavbarItem("Prisijungti", "login.php", $location);
         } else {
-            if ($_SESSION['role'] >= 2 && $_SESSION['uzblokuotas'] !== '1') {
+            if ($_SESSION['role'] >= 2 && $_SESSION['busena'] !== 'Užblokuotas') {
                 self::printNavbarItem("Valdymas", "adminpanel.php", $location);
             }
             self::printNavbarItem("Krepšelis", "gallery.php", $location);
             self::printNavbarItem("Nustatymai", "settings.php", $location);
             self::printNavbarItem("Atsijungti", "logout.php", $location);
         }
-        if( $_SESSION['uzblokuotas'] !== '1') {
+        if( $_SESSION['busena'] !== 'Užblokuotas') {
             echo '</ul>
             <form class="form-inline my-2 my-lg-0" method="POST" action="search.php">
                 <input class="form-control mr-sm-2" type="search" name="searchText" placeholder="Raktažodis paieškai" aria-label="Search">
@@ -107,6 +107,23 @@ public static function printNavbar($location)
 
             </div>
                 <button type="submit" name="registerButton" class="btn btn-primary">Registruotis</button>
+        </form>';
+    }
+
+        public function printLoginPage()
+    {
+        echo '
+        <form method="POST" class="mainForm">
+            <div class="form-group">
+                <label for="inputFor">Slapyvardis</label>
+                <input name="username" type="text" class="form-control" id="inputFor" placeholder="Slapyvardis">
+            </div>
+            <div class="form-group">
+                <label for="inputFor">Slaptažodis</label>
+                <input name="password" type="password" class="form-control" id="inputFor" placeholder="Slaptažodis">
+            </div>
+                <button type="submit" name="loginButton" class="btn btn-primary">Prisijungti</button>
+                <a href="remindpass.php">Pamiršai slaptažodį?</a>
         </form>';
     }
 
