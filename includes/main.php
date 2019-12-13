@@ -32,7 +32,7 @@ class Model {
         $_SESSION['id'] = "0";
         $_SESSION['vardas'] = "0";
         $_SESSION['slaptazodis'] = "0";
-        $_SESSION['email'] = "0";
+        $_SESSION['el_pastas'] = "0";
         $_SESSION['role'] = "0";
         $_SESSION['uzblokuotas'] = "0";
 
@@ -58,9 +58,9 @@ class Model {
                         $_SESSION['id'] = $row['id'];
                         $_SESSION['vardas'] = $row['vardas'];
                         $_SESSION['slaptazodis'] = $row['slaptazodis'];
-                        $_SESSION['email'] = $row['email'];
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['uzblokuotas'] = $row['uzblokuotas'];
+                        $_SESSION['el_pastas'] = $row['el_pastas'];
+                        $_SESSION['role'] = $row['fk_role'];
+                        $_SESSION['busena'] = $row['fk_naudotojo_busena'];
                         return true;
                     }
                     else
@@ -88,28 +88,33 @@ class Model {
         return true;
     }
 
-    public function registerUser($username, $surname, $email, $password, $passwordRepeat, $date)
+    public function registerUser($username, $surname, $el_pastas, $password, $passwordRepeat, $date)
     {
         $conn = $this->conn;
 
         $username = $this->secureInput($username);
         $surname = $this->secureInput($surname);
-        $email = $this->secureInput($email);
+        $el_pastas = $this->secureInput($el_pastas);
         $password = $this->secureInput($password);
         $passwordRepeat = $this->secureInput($passwordRepeat);
         $date = $this->secureInput($date);
 
 
-        if (empty($username) || empty($password) || empty($passwordRepeat) || empty($email)) {
+        if (empty($username) || empty($password) || empty($passwordRepeat) || empty($el_pastas)) {
+
             return false;
         } else {
             $sql = "SELECT * FROM naudotojas WHERE vardas=? AND slaptazodis=?;";
             $stmt = mysqli_stmt_init($conn);
+            printf($stmt);
             if (!mysqli_stmt_prepare($stmt, $sql)) {
+                
                 return false;
             } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+
                 return false;
             } else if ($password !== $passwordRepeat) {
+
                 return false;
             } else {
                 $sql = "SELECT vardas FROM naudotojas WHERE vardas=?";
@@ -136,7 +141,7 @@ class Model {
                             $role = 1;
                             $blocked = 1;
                             $date = date('Y-m-d H:i:s');
-                            mysqli_stmt_bind_param($stmt, "isssssss", $id, $username, $surname, $hashedPwd, $email, $date, $blocked, $role);
+                            mysqli_stmt_bind_param($stmt, "isssssii", $id, $username, $surname, $hashedPwd, $el_pastas, $date, $blocked, $role);
                             mysqli_stmt_execute($stmt);
                             return true;
                         }
@@ -144,6 +149,13 @@ class Model {
                 }
             }
         }
+    }
+
+        public function secureInput($input)
+    {
+        $input = mysqli_real_escape_string($this->conn, $input);
+        $input = htmlspecialchars($input);
+        return $input;
     }
 }
 ?>

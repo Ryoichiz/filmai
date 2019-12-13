@@ -22,12 +22,12 @@ class UserController extends MainController implements iController
             $username = $_POST['username'];
             $surname = $_POST['surname'];
             $password = $_POST['password'];
-            $email = $_POST['el_pastas'];
+            $el_pastas = $_POST['el_pastas'];
             $passwordRepeat = $_POST['passwordRepeat'];
             $date = date('Y-m-d H:i:s');
 
 
-            if($this->getModel()->registerUser($username, $surname, $email, $password, $passwordRepeat, $date)) {
+            if($this->getModel()->registerUser($username, $surname, $el_pastas, $password, $passwordRepeat, $date)) {
                 //$this->getModel()->updateLog("Registracija sėkminga!", $username);
                 $this->getView()->printSuccess('Registracija sėkminga!');
             } else {
