@@ -75,7 +75,16 @@ class ProfileController extends MainController implements iController
 
         if (isset($_POST['deleteUserBtn']))
         {
-            $this->getModel()->deleteUser($_SESSION['vardas']);
+            $vardas = $_SESSION['vardas'];
+            $data = $this->getModel()->getDataByString("naudotojas","vardas",$vardas);
+            echo $data['id'];
+            if($this->getModel()->deleteData('naudotojas', $data['id']))
+            {
+                $this->getView()->printSuccess('Trinama');
+                $this->redirect_to_another_page('index.php', 1);
+            } else {
+                $this->getView()->printDanger('Klaida');
+            }
         }
     }
 

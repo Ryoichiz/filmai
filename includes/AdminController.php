@@ -40,6 +40,17 @@ class AdminController extends  MainController implements iController
                     $this->printSuccess("sėkmingai pakeista busena");
                 }
 
+            } else if (isset($_GET['deleteid']) && !empty($_GET['deleteid']) && $_GET['deleteid'] != '')
+            {
+                $id = $this->getModel()->secureInput($_GET['deleteid']);
+                $data = $this->getModel()->getDataByColumnFirst("naudotojas", "id", $id);
+                if ($this->getModel()->deleteData('naudotojas', $data['id']))
+                {
+                    $this->getView()->printSuccess('Trinama');
+                    $this->redirect_to_another_page('admin.php', 1);
+                } else {
+                    $this->getView()->printDanger('Klaida');
+                }
             }
         }
 
@@ -68,7 +79,7 @@ class AdminController extends  MainController implements iController
             //$ip = $this->getModel()->getIP();
             //$this->getModel()->updateLog("Naudotojas neleistinai bandė panaudoti puslapįu", $ip);
             $this->printDanger('Ivyko klaida!');
-            $this->redirect_to_another_page('adminpanel.php', 0);
+            $this->redirect_to_another_page('admin.php', 0);
             return;
         }
 

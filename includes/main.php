@@ -262,6 +262,22 @@ class Model {
         }
     }
 
+        public function deleteData($table, $id)
+        {
+        $table = $this->secureInput($table);
+        $id = $this->secureInput($id);
+        $sql = "DELETE  FROM ".$table." WHERE id=".$id;
+        if(mysqli_query($this->conn, $sql))
+        {
+            return true;
+        }
+        else
+        {
+            echo mysqli_error($this->conn);
+            return false;
+        }
+        }
+
         public function changePasswdAdmin($id, $newPasswd, $repeatNewPasswd)
     {
         $conn = $this->conn;

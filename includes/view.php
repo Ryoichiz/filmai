@@ -253,9 +253,17 @@ public static function printNavbar($location)
                 echo '<input type="hidden" name="id" value="' . $row['id'] . '">
                 <button type="submit" class="btn btn-primary btn-sm">Pakeisti rolę</button>
                 </form>
-             </li>';
-                }
+                <form class="btn">
+                <input type="hidden" name="deleteid" value="' . $row['id'] . '">
+                <button type="submit" class="btn btn-danger btn-sm">Naikinti</button>
+                </form>
 
+             </li>';
+
+                }
+                echo '<form>';
+                echo '<a href="discount.php"><button type="button" class="btn btn-primary btn-sm">Nuolaidos</button> </a>';
+                echo '</form>';
             }
         }
 
