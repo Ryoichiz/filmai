@@ -22,6 +22,25 @@ if(isset($_GET['ID'])){
         $ID = mysqli_real_escape_string($conn, $_GET['ID']);
         $sql = "SELECT * FROM filmas WHERE id='$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
+
+        
+
+        $sql1 = "SELECT zanrai.pavadinimas
+        FROM `filmo_zanrai`
+        JOIN filmas ON fk_filmo_id = filmas.id 
+        JOIN zanras ON fk_zanro_id = zanras.id
+        JOIN zanrai ON zanras.fk_zanras = zanrai.id
+        WHERE filmas.id = '$ID' ";
+        $result1 = mysqli_query($conn, $sql1) or die ("Bad Querry: $sql1");
+
+        $datas = array();
+        if(mysqli_num_rows($result1) > 0){
+            while ($row1= mysqli_fetch_assoc($result1)){
+                $datas[] = $row1;
+            }
+        }
+        var_dump($datas);
+
         $row = mysqli_fetch_array($result);
     }else
     header('Location: movies.php');
@@ -50,14 +69,33 @@ if(isset($_GET['ID'])){
             ?>
         </div>
     </nav>
-    <div id='div-info'>
-        <h1><?php echo $row['pavadinimas'] ?></h1>
-        <img src='uploads/<?php echo $row['paveiksliukas'] ?>'>
-        <h2><?php echo $row['kaina'] ?></h2>
-        <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
-         <iframe width="420" height="315" src='<?php echo $videourl ?>' allowfullscreen> </iframe> 
-         <?php echo $videourl; ?>
+    <?php
+    if($_SESSION['role'] == 'Administratorius'){
+        echo "<div class='insert-button'> <a href=\"movie_edit.php\">Redaguoti</a> <a href=\"movie_remove.php\">Ištrinti</a></div>";
+    }
+    ?>
+    <div>
+        <div class='pic_div'>
+            <img src='uploads/<?php echo $row['paveiksliukas'] ?>' height="600" width="400">
+        </div>
+        <div id='div-info'>
+            <h1><?php echo $row['pavadinimas'] ?></h1>
+            <p><?php echo $row['aprasymas'] ?></p>
+        </div>
+        <div class='info_div'>
+            <p>Trukmė: <?php echo $row['trukme'] ?></p>
+            <p>Ivetinimas: <?php echo $row['ivertinimas'] ?></p>
+            <p>Metai: <?php echo $row['isleidimo_metai'] ?></p>
+            <p>Žanrai: <?php foreach ($datas as $data) {
+                echo $data['pavadinimas']." ";
+            } 
+            ?></p>
+            <p>Kaina: <?php echo $row['kaina'] ?> eur.</p>
+        </div>
+        <div class='anonsas'>
+            <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
+            <iframe width="420" height="315" src='<?php echo $videourl ?>' allowfullscreen> </iframe> 
+        </div>
     </div>
-    
 	</body>
 </html> 

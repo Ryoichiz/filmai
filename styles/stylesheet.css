@@ -9,6 +9,12 @@
 }
 #div-info{
 	text-align: center;
+    margin-top: 40px;
+}
+#div-info p{
+    text-align: center;
+    margin-top: 40px;
+    margin-right: 17px;
 }
 #inline{
 	display: inline-block;
@@ -32,4 +38,23 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+.pic_div{
+    margin-left: 120px;
+    margin-top: 40px;
+    float:left;
+    position:relative;
+    display:inline-block;
+}
+.wrapper {
+    grid-template-columns: 60% 40%;
+    grid-row-gap: 4em;
+}
+.info_div{
+    
+    display:inline-block;
+    margin-left: 30px;
+}
+.anonsas{
+     text-align: center;
 }
