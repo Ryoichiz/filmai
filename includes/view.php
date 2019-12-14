@@ -178,8 +178,8 @@ public static function printNavbar($location)
 
     public function printAdminPanel($users)
     {
-        echo '
-                <ul class="list-group">';
+        
+                echo '<ul class="list-group">';
                  echo '<li class="list-group-item">
                    Prisijungusio valdytojo vardas: '.$_SESSION['vardas'].'
                  </li>';
@@ -189,35 +189,49 @@ public static function printNavbar($location)
                 echo'<li class="list-group-item">
                 '.$row['vardas'].' 
                 <form class="btn">
-                <input type="hidden" name="id" value="'.$row['id'].'">
-                <button type="submit" name="uztildytas" value="1" class="btn btn-warning btn-sm">'; if($row['uztildytas'] == '0') { echo 'uztildyti'; } else { echo 'atitildyti'; }  echo '</button>
-                </form>';
-                if($_SESSION['role'] == "Administratorius") {
-                    echo '
-                <form class="btn">
-                <input type="hidden" name="id" value="' . $row['id'] . '">
-                <button type="submit" name="uzblokuotas" value="1" class="btn btn-danger btn-sm">'; if($row['uzblokuotas'] == '0') { echo 'uzblokuoti'; } else { echo 'atblokuoti'; }  echo '</button>
-                </form>
-                <a href="edituser.php?id=' . $row['id'] . '"><button type="button" class="btn btn-primary btn-sm">Redaguoti naudotoją</button> </a>
-                <form class="btn">
-                <select class="btn btn-light" name="role">
-                ';
+                <select class="btn btn-light" name="busena">';
 
-                    if ($row['role'] == "Administratorius") {
-                        echo '<option selected value = "1" > Naudotojas</option >
-                          <option value = "2" > Administratorius</option >
-                     </select>
-                ';
-                    } else if ($row['role'] == "Naudotojas") {
-                        echo '<option value = "1" > Naudotojas</option >
-                          <option selected value = "2" > Administratorius</option >
-                     </select>
-                ';
+                    if ($row['fk_naudotojo_busena'] == "Neutralus") {
+                        echo '<option selected value = "Neutralus" > Neutralus</option >
+                          <option value = "Užtildytas" > Užtildytas</option >
+                          <option value = "Užblokuotas" > Užblokuotas</option >
+                     </select>';
+                    } else if ($row['fk_naudotojo_busena'] == "Užblokuotas") {
+                        echo '<option value = "Užblokuotas" > Užblokuotas</option >
+                        <option selected value = "Neutralus" > Neutralus</option >
+                         <option value = "Užtildytas" > Užtildytas</option >
+                     </select>';
+                    }else if ($row['fk_naudotojo_busena'] == "Užtildytas") {
+                        echo '<option value = "Užtildytas" > Užtildytas</option >
+                        <option selected value = "Neutralus" > Neutralus</option >
+                        <option value = "Užblokuotas" > Užblokuotas</option >
+                     </select>';
                     }
 
-                    echo '
+                echo '<input type="hidden" name="busenaid" value="' . $row['id'] . '">
+                <button type="submit" class="btn btn-primary btn-sm">Pakeisti buseną</button>
+                </form>
+
+                <a href="edituser.php?id=' . $row['id'] . '"><button type="button" class="btn btn-primary btn-sm">Redaguoti naudotoją</button> </a>
+                <form class="btn">
+                <select class="btn btn-light" name="role">';
                 
-                <input type="hidden" name="id" value="' . $row['id'] . '">
+
+                    if ($row['fk_role'] == "Naudotojas") {
+                        echo '
+                        <option selected value = "Naudotojas" > Naudotojas</option >
+                          <option value = "Administratorius" > Administratorius</option >
+                     </select>';
+                
+                    } else if ($row['fk_role'] == "Administratorius") {
+                        echo '
+                          <option selected value = "Administratorius" > Administratorius</option >
+                          <option value = "Naudotojas" > Naudotojas</option >
+                     </select>';
+                
+                    }
+
+                echo '<input type="hidden" name="id" value="' . $row['id'] . '">
                 <button type="submit" class="btn btn-primary btn-sm">Pakeisti rolę</button>
                 </form>
              </li>';
@@ -225,9 +239,6 @@ public static function printNavbar($location)
 
             }
         }
-
-        echo '</ul>';
-    }
 
 
 

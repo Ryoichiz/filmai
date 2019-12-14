@@ -16,32 +16,28 @@ class AdminController extends  MainController implements iController
         }
         else {
 
-            if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != '' && isset($_GET['role']) && !empty($_GET['role']) && $_GET['role'] != '' && $_GET['role'] > 0 && 4 > $_GET['role']) {
+            if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != '' && isset($_GET['role']) && !empty($_GET['role']) && $_GET['role'] != '') {
                 $id = $this->getModel()->secureInput($_GET['id']);
                 $role = $this->getModel()->secureInput($_GET['role']);
                 $data = $this->getModel()->getDataByColumnFirst("naudotojas", "id", $id);
-                if ($data['role'] !== $_GET['role'] && $data['id'] == $_GET['id']) {
-                    $this->getModel()->updateDataOneColumn("naudotojas", $_GET['id'], "role", $role);
+                if ($data['fk_role'] !== $_GET['role'] && $data['id'] == $_GET['id']) {
+                    $this->getModel()->updateDataOneColumn("naudotojas", $_GET['id'], "fk_role", $role);
                     $roleName = $role;
                     //$ip = $this->getModel()->getIP();
                     //$this->getModel()->updateLog("Pekeista privilegija: ".$data['slapyvardis'].": ".$roleName." ", $ip);
                     $this->printSuccess("sėkmingai pakeista privilegija");
                 }
-            } else if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != '' && isset($_GET['uztildytas']) && !empty($_GET['uztildytas']) && $_GET['uztildytas'] != '' && $_GET['uztildytas'] >= 0 && 2 > $_GET['uztildytas']) {
-                $id = $this->getModel()->secureInput($_GET['id']);
-                $uztildytas = $this->getModel()->secureInput($_GET['uztildytas']);
-                $data = $this->getModel()->getDataByColumnFirst("naudotojai", "id", $id);
-                if ($data['uztildytas'] !== $uztildytas && $id == $id) {
-                    $this->getModel()->updateDataOneColumn("naudotojas", $id, "uztildytas", $uztildytas);
+            } else if (isset($_GET['busenaid']) && !empty($_GET['busenaid']) && $_GET['busenaid'] != '' && isset($_GET['busena']) && !empty($_GET['busena']) && $_GET['busena'] != '') {
+                $id = $this->getModel()->secureInput($_GET['busenaid']);
+                $busena = $this->getModel()->secureInput($_GET['busena']);
+                $data = $this->getModel()->getDataByColumnFirst("naudotojas", "id", $id);
+                if ($data['fk_naudotojo_busena'] !== $_GET['busena'] && $data['id'] == $_GET['busenaid']) {
+                    $this->getModel()->updateDataOneColumn("naudotojas", $_GET['busenaid'], "fk_naudotojo_busena", $busena);
+                    $busenaName = $busena;
                     //$ip = $this->getModel()->getIP();
-                    //$this->getModel()->updateLog("Naudotojas užtildytas: ".$data['slapyvardis']."", $ip);
-                    $this->printSuccess("Sėkmingai užtildytas");
-                } else if ($data['uztildytas'] === $_GET['uztildytas'] && $data['id'] == $_GET['id']) {
-                    //$this->getModel()->updateDataOneColumn("naudotojas", $id, "uztildytas", '0');
-                    //$ip = $this->getModel()->getIP();
-                    //$this->getModel()->updateLog("Naudotojas atitildytas: ".$data['slapyvardis']."", $ip);
-                    $this->printSuccess("Vartotojas yra atitildytas");
-
+                    //$this->getModel()->updateLog("Pekeista privilegija: ".$data['slapyvardis'].": ".$roleName." ", $ip);
+                    $this->printSuccess($busena);
+                    $this->printSuccess("sėkmingai pakeista busena");
                 }
 
             } else if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != '' && isset($_GET['uzblokuotas']) && !empty($_GET['uzblokuotas']) && $_GET['uzblokuotas'] != '' && $_GET['uzblokuotas'] >= 0 && 2 > $_GET['uzblokuotas']) {
