@@ -17,4 +17,6 @@ class MainPageController extends MainController implements iController
     {
         $this->getView()->printIndexPage();
     }
+
+    
 }

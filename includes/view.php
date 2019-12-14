@@ -27,6 +27,7 @@ public static function printNavbar($location)
         self::printNavbarItem("Namai", "index.php", $location);
         if($_SESSION['busena'] !== 'Užblokuotas') {
             self::printNavbarItem("Filmai", "movies.php", $location);
+            self::printNavBarItem("Top10", "top_movies.php", $location);
             
         }
         if ($_SESSION['role'] == "0") {
@@ -175,6 +176,17 @@ public static function printNavbar($location)
                 <button type="submit" name="changePasswdBtn" class="btn btn-danger">Keisti slaptažodį</button>
             </form>';
     }
+
+        public function printDeleteButton()
+        {
+            echo '<form method=\'POST\' class=\'mainForm\'>
+
+                <div class="form-group text-center">
+                <h2>Ištrinti profilį (paspaudus vartotojas bus ištrinamas iš puslapio)</h2>
+                <button type="submit" name="deleteUserBtn" class="btn btn-danger">Ištrinti paskyrą</button>
+                </div>
+            </form>';
+        }
 
     public function printAdminPanel($users)
     {

@@ -17,6 +17,9 @@ $controller = new ProfileController();
     <title><?php $controller->getTitle() ?></title>
 </head>
   <body>
+      <?php
+      MainController::printTopBar("movies.php");
+      ?>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
           <div class='container'>
               <?php
@@ -28,6 +31,7 @@ $controller = new ProfileController();
       <div class='container'>
           <?php
             $controller->printPageView();
+            //$connect = $controller->Connection();
           ?>
       </div>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

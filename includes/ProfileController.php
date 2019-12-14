@@ -9,6 +9,13 @@ class ProfileController extends MainController implements iController
     }
 
     // settings.php
+    public function Connection()
+    {
+        $controller = new model();
+        $conn = $controller->returnConn();
+        return $conn;
+    }
+
     public function printPageView()
     {
         if($_SESSION['role'] !== "Naudotojas" && $_SESSION['role'] !== "Administratorius") {
@@ -29,6 +36,7 @@ class ProfileController extends MainController implements iController
             $this->getView()->printSettingsForm($row['vardas'], $row['pavarde'],
                 $row['el_pastas']);
             $this->getView()->printChangePasswordForm();
+            $this->getView()->printDeleteButton();
         }
         if (isset($_POST['saveSettingsBtn']))
         {
@@ -42,7 +50,7 @@ class ProfileController extends MainController implements iController
                 $this->redirect_to_another_page('profile.php', 1);
             } else {
                 //$ip = $this->getModel()->getIP();
-                $this->getModel()->updateLog("Vartotojo pakeitimai neišsaugoti", $ip);
+                //$this->getModel()->updateLog("Vartotojo pakeitimai neišsaugoti", $ip);
                 $this->getView()->printDanger('Klaida');
             }
         }
@@ -63,6 +71,11 @@ class ProfileController extends MainController implements iController
                 //$this->getModel()->updateLog("Klaida keičiant seną slaptažodį", $ip);
                 $this->getView()->printDanger('Klaida');
             }
+        }
+
+        if (isset($_POST['deleteUserBtn']))
+        {
+            $this->getModel()->deleteUser($_SESSION['vardas']);
         }
     }
 

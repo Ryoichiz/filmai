@@ -17,6 +17,9 @@ $controller = new AdminController();
     <title><?php $controller->getTitle() ?></title>
 </head>
 <body>
+        <?php
+        MainController::printTopBar("movies.php");
+        ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class='container'>
         <?php
