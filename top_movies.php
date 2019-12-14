@@ -46,14 +46,14 @@
         </div>
     </nav>
 
-    <div id='div-names'>
+    <div class='film_form'>
     <?php
     	if (mysqli_num_rows($result) > 0)
         {
             while($row = $result->fetch_assoc())
             {
-                echo '<div id=\'top\'><center><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200"></center><br>';
-                echo "<center><a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><center> </div>";
+                echo '<div id=\'top\'><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200">';
+                echo "<a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a> </div>";
             }
         }else {
             echo "<h2>No Titles to display</h2>";
