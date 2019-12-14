@@ -57,7 +57,24 @@
             <br>
             <label>Pasirinkite filmo paveiksliuką</label>
             <br>
-            <input type="file" name="paveiksliukas" required>
+            <!-- initially hide image tag -->
+            <img src='uploads/<?php echo $row['paveiksliukas'] ?>' height="200" id="image">
+            <!-- passing this explicitly -->
+            <input type="file" name="paveiksliukas"  onchange="showImage.call(this)" required>
+            <script>
+                function showImage(){
+                    if(this.files && this.files[0]){
+                        var obj = new FileReader();
+                        obj.onload = function(data){
+                            var image = document.getElementById("image");
+                            image.src = data.target.result;
+                            image.style.display = "block";
+                        }
+                        obj.readAsDataURL(this.files[0]);
+                    }
+                }
+
+            </script>>
             <br>
             <br>
             <p>Įveskite išleidimo metus</p>
