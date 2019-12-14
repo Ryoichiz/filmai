@@ -39,7 +39,7 @@ if(isset($_GET['ID'])){
                 $datas[] = $row1;
             }
         }
-        var_dump($datas);
+        //var_dump($datas);
 
         $row = mysqli_fetch_array($result);
     }else
@@ -71,7 +71,7 @@ if(isset($_GET['ID'])){
     </nav>
     <?php
     if($_SESSION['role'] == 'Administratorius'){
-        echo "<div class='insert-button'> <a href=\"movie_edit.php\">Redaguoti</a> <a href=\"movie_remove.php\">Ištrinti</a></div>";
+        echo "<div class='insert-button'> <a href=\"movie_edit.php?ID=$ID\">Redaguoti</a> <a href=\"movie_delete.php?ID=$ID\">Ištrinti</a></div>";
     }
     ?>
     <div>
