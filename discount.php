@@ -18,12 +18,12 @@ $controller = new DiscountController();
 </head>
 <body>
         <?php
-        MainController::printTopBar("movies.php");
+        MainController::printTopBar("discount.php");
         ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class='container'>
         <?php
-        MainController::printNavigationBar("admin.php");
+        MainController::printNavigationBar("discount.php");
         ?>
     </div>
 </nav>

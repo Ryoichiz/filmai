@@ -37,6 +37,7 @@ public static function printNavbar($location)
         } else {
             if ($_SESSION['role'] == "Administratorius" && $_SESSION['busena'] !== 'Užblokuotas') {
                 self::printNavbarItem("Valdymas", "admin.php", $location);
+                self::printNavBarItem("Nuolaidos", "discount.php", $location);
             }
             self::printNavbarItem("Krepšelis", "gallery.php", $location);
             self::printNavbarItem("Nustatymai", "profile.php", $location);

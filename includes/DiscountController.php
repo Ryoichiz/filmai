@@ -31,6 +31,7 @@ class DiscountController extends  MainController implements iController
                 //$ip = $this->getModel()->getIP();
                 //$this->getModel()->updateLog("Senas slaptažodis sėkmingai pakeistas", $ip);
                 $this->getView()->printSuccess('Nuolaida sukurta');
+                $this->redirect_to_another_page('discount.php', 1);
             	} else {
                 //$ip = $this->getModel()->getIP();
                 //$this->getModel()->updateLog("Klaida keičiant seną slaptažodį", $ip);
