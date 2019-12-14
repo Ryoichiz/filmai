@@ -196,21 +196,28 @@ public static function printNavbar($location)
                           <option value = "Užtildytas" > Užtildytas</option >
                           <option value = "Užblokuotas" > Užblokuotas</option >
                      </select>';
+                     echo '<input type="hidden" name="busenaid" value="' . $row['id'] . '">
+                <button type="submit" class="btn btn-primary btn-sm">Pakeisti buseną</button>
+                </form>';
                     } else if ($row['fk_naudotojo_busena'] == "Užblokuotas") {
                         echo '<option value = "Užblokuotas" > Užblokuotas</option >
                         <option selected value = "Neutralus" > Neutralus</option >
                          <option value = "Užtildytas" > Užtildytas</option >
                      </select>';
+                      echo '<input type="hidden" name="busenaid" value="' . $row['id'] . '">
+                <button type="submit" class="btn btn-danger btn-sm">Pakeisti buseną</button>
+                </form>';
                     }else if ($row['fk_naudotojo_busena'] == "Užtildytas") {
                         echo '<option value = "Užtildytas" > Užtildytas</option >
                         <option selected value = "Neutralus" > Neutralus</option >
                         <option value = "Užblokuotas" > Užblokuotas</option >
                      </select>';
+                       echo '<input type="hidden" name="busenaid" value="' . $row['id'] . '">
+                <button type="submit" class="btn btn-warning btn-sm">Pakeisti buseną</button>
+                </form>';
                     }
 
-                echo '<input type="hidden" name="busenaid" value="' . $row['id'] . '">
-                <button type="submit" class="btn btn-primary btn-sm">Pakeisti buseną</button>
-                </form>
+                echo '
 
                 <a href="edituser.php?id=' . $row['id'] . '"><button type="button" class="btn btn-primary btn-sm">Redaguoti naudotoją</button> </a>
                 <form class="btn">
@@ -239,6 +246,43 @@ public static function printNavbar($location)
 
             }
         }
+
+            public function printEditUserAsAdmin($content)
+    {
+        echo ' <form method="POST" class="mainForm">
+            <h1>Koreguojamas '.$content['vardas'].' profilis</h1>
+            <h1>Profilio nustatymai</h1>
+            <input type="hidden" name="id" value="'.$content['id'].'">
+            <div class="form-group">
+                <label for="inputFor">Slapyvardis*</label>
+                <input type="text" class="form-control" id="inputFor" value="'.$content['vardas'].'" disabled>
+            </div>
+                <div class="form-group">
+                <label for="inputFor">Pavardė</label>
+                <input type="text" class="form-control" id="inputFor" name="pavarde" placeholder="Pavardė" value="'.$content['pavarde'].'">
+                </div>
+            <div class="form-group">
+                <label for="inputFor">El. pašto adresas*</label>
+                <input type="email" class="form-control" id="inputFor" name="el_pastas" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$content['el_pastas'].'">
+            </div>
+
+                <button type="submit" name="request" value="visiDuomenys" class="btn btn-primary">Išsaugoti nustatymus</button>
+        </form>
+
+        <form method="POST" class="mainForm">
+            <h1>Slaptažodžio keitimo forma</h1>
+            <div class="form-group">
+                <label for="inputFor">Naujas slaptažodis</label>
+                <input type="password" class="form-control" name="slaptazodis" value="slaptazodis" id="inputFor" name="slaptazodis  " placeholder="Naujas slaptažodis">
+            </div>
+            <div class="form-group">
+                <label for="inputFor">Pakartokite naują slaptažodį</label>
+                <input type="password" class="form-control" name="slaptazodisPakartoti" value="slaptazodisPakartoti" id="inputFor" name="slaptazodisPakartoti" placeholder="Naujas slaptažodis">
+            </div>
+            <button type="submit" name="request" value="slaptazodisSubmit" class="btn btn-danger">Keisti slaptažodį</button>
+        </form>';
+
+    }
 
 
 

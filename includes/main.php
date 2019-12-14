@@ -262,6 +262,49 @@ class Model {
         }
     }
 
+        public function changePasswdAdmin($id, $newPasswd, $repeatNewPasswd)
+    {
+        $conn = $this->conn;
+        $id = $this->secureInput($id);
+        $newPasswd = $this->secureInput($newPasswd);
+        $repeatNewPasswd = $this->secureInput($repeatNewPasswd);
+
+        $sql = "SELECT * FROM naudotojas WHERE id='$id'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                    if ($newPasswd !== $repeatNewPasswd) {
+                        echo("<script>location.href = 'edituser.php?id=1&error=".$newPasswd."';</script>");
+                        exit();
+                    } else {
+                        $sql = "SELECT vardas FROM naudotojas WHERE vardas=?";
+                        $stmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                            echo("<script>location.href = 'edituser.php?id=1&error=sqlerror';</script>");
+                            exit();
+                        } else {
+                            mysqli_stmt_bind_param($stmt, "s", $username);
+                            mysqli_stmt_execute($stmt);
+                            $sql = ("SET CHARACTER SET utf8");
+                            $conn->query($sql);
+                            $hashedPwd = password_hash($newPasswd, PASSWORD_DEFAULT);
+                            $sql = "UPDATE naudotojas SET slaptazodis=? WHERE id=?";
+                            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                return false;
+                            } else {
+                                mysqli_stmt_bind_param($stmt, "ss", $hashedPwd, $id);
+                                mysqli_stmt_execute($stmt);
+                                return true;
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
         public function secureInput($input)
     {
         $input = mysqli_real_escape_string($this->conn, $input);
@@ -319,7 +362,7 @@ class Model {
         $column = $this->secureInput($column);
         $newValue = $this->secureInput($newValue);
         $sql = "UPDATE ".$table." SET ".$column."='".$newValue."' WHERE id=".$rowId;
-
+        $this->conn->set_charset("utf8");
         if($this->conn->query($sql))
         {
             return true;
@@ -334,6 +377,7 @@ class Model {
         public function getData($table)
     {
         $table = $this->secureInput($table);
+        $this->conn->set_charset("utf8");
         $sql = "SELECT * FROM ".$table;
         $result = mysqli_query($this->conn, $sql);
 

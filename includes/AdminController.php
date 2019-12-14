@@ -40,33 +40,6 @@ class AdminController extends  MainController implements iController
                     $this->printSuccess("sėkmingai pakeista busena");
                 }
 
-            } else if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != '' && isset($_GET['uzblokuotas']) && !empty($_GET['uzblokuotas']) && $_GET['uzblokuotas'] != '' && $_GET['uzblokuotas'] >= 0 && 2 > $_GET['uzblokuotas']) {
-                $id = $this->getModel()->secureInput($_GET['id']);
-                $uzblokuotas = $this->getModel()->secureInput($_GET['uzblokuotas']);
-
-
-                $data = $this->getModel()->getDataByColumnFirst("naudotojas", "id", $id);
-                if ($data['uzblokuotas'] !== $uzblokuotas && $data['id'] == $id) {
-                    $id = $this->getModel()->secureInput($id);
-                    $this->getModel()->updateDataOneColumn("naudotojas", $id, "uzblokuotas", $uzblokuotas);
-                    $username = $this->getModel()->secureInput($data['slapyvardis']);
-                    //$ip = $this->getModel()->getIP();
-                    //$this->getModel()->updateLog("Naudotojas užblokuotas: ".$data['slapyvardis']."", $ip);
-                    $this->printSuccess("Sėkmingai užblokuotas");
-                    if ($id === $_SESSION['id']) {
-                        $_SESSION['uzblokuotas'] = '1';
-                        $this->redirect_to_another_page('index.php', 0);
-                    }
-                    } else if ($data['uzblokuotas'] === $_GET['uzblokuotas'] && $data['id'] == $id) {
-                    $id = $this->getModel()->secureInput($id);
-                    $this->getModel()->updateDataOneColumn("naudotojas", $id, "fk_naudotojo_busena", 'Neutralus');
-
-
-                    //$username = $this->getModel()->secureInput($data['vardas']);
-                    //$ip = $this->getModel()->getIP();
-                    $this->getModel()->updateLog("Naudotojas atblokuotas: ".$username."", $ip);
-                    $this->printSuccess("Vartotojas yra atblokuotas");
-                }
             }
         }
 
@@ -84,11 +57,11 @@ class AdminController extends  MainController implements iController
 
     public function printEditUserView()
     {
-        if($_SESSION['role'] < 2 || $_SESSION['uzblokuotas'] === '1')
+        if($_SESSION['role'] !== 'Administratorius' || $_SESSION['busena'] === 'Užblokuotas')
         {
             //$ip = $this->getModel()->getIP();
             //$this->getModel()->updateLog("Naudotojas neleistinai bandė panaudoti puslapįu", $ip);
-            $this->redirect_to_another_page('index.php', 0);
+            //$this->redirect_to_another_page('index.php', 0);
         }
         if(!isset($_GET['id']))
         {
@@ -105,15 +78,15 @@ class AdminController extends  MainController implements iController
         foreach ($_POST as $param_name => $param_val) {
             $value = $this->getModel()->secureInput($param_val);
             if(isset($_POST['request']) && $_POST['request'] == "visiDuomenys") {
-                if ($param_name !== 'id' && $param_name != "slapyvardis" && $param_name != "request" &&  isset($value) && !empty($value) && $value != '') {
+                if ($param_name !== 'id' && $param_name != "vardas" && $param_name != "request" &&  isset($value) && !empty($value) && $value != '') {
 
-                    $this->getModel()->updateDataOneColumn("naudotojai", $id, $param_name, $value);
-                } else if (($param_name == 'email') && ( $param_name != "request" && !isset($value) || empty($value) || $value == '')) {
+                    $this->getModel()->updateDataOneColumn("naudotojas", $id, $param_name, $value);
+                } else if (($param_name == 'el_pastas') && ( $param_name != "request" && !isset($value) || empty($value) || $value == '')) {
                     //$ip = $this->getModel()->getIP();
                     //$this->getModel()->updateLog("Vartotojo tvarkymo Laukas: email yra tuščias", $ip);
                     $this->printDanger('Laukai yra tušti');
                     $check = false;
-                } else if ($param_name === 'slapyvardis') {
+                } else if ($param_name === 'vardas') {
                     //$ip = $this->getModel()->getIP();
                     //$this->getModel()->updateLog("Vartotojo tvarkymo Laukas: slapyvardis yra tuščias", $ip);
                     $this->printDanger('Laukai yra tušti');
