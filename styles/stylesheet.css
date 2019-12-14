@@ -2,11 +2,34 @@
     margin-left: 120px;
     margin-top: 40px;
     position:relative;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-rows: auto;
+    grid-gap:0 40px;
 }
 #div-info{
 	text-align: center;
 }
 #inline{
 	display: inline-block;
-	width: 20.333%
+	width: 73.333%
+}
+.insert-button{
+	float:right;
+	margin-right: 80px;
+	margin-top:5px; 
+}
+.film_form {
+    margin-left: 120px;
+    margin-top: 40px;
+}
+.button{
+    background-color: #A9A9A9; /* Dark Gray */
+    border: 1px solid #696969; /* Dim Gray */
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
