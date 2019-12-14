@@ -50,10 +50,12 @@
     <?php
     	if (mysqli_num_rows($result) > 0)
         {
+            $count = 0;
             while($row = $result->fetch_assoc())
             {
-                echo '<div id=\'top\'><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200">';
-                echo "<a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a> </div>";
+                $count++;
+                echo '<div class=\'top\'><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200">';
+                echo " {$count}.<a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']} ({$row['isleidimo_metai']})</a> <label>Ivertinimas: {$row['ivertinimas']} </label></div><br>";
             }
         }else {
             echo "<h2>No Titles to display</h2>";
