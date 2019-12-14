@@ -49,14 +49,21 @@
         $dbPassword = $dbConfigLines[2];
         $dbName = $dbConfigLines[3];
         $conn = new mysqli($server,$dbUser, $dbPassword, $dbName);
+
+        $ID = mysqli_real_escape_string($conn, $_GET['ID']);
+        
+
         // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }else{
-            $sql  = "INSERT INTO filmas (pavadinimas,isleidimo_metai,trukme,aprasymas,ivertinimas,kaina,paveiksliukas, anonsas)
-            VALUES ('$pavadinimas','$metai','$trukme','$aprasymas','0', '$kaina','$fileNameNew','$anonsas')";
-            if (!mysqli_query($conn, $sql)) {
-                 die ("Klaida įrašant:" .mysqli_error($conn));
-             }else echo "header(\"Location: movies.php?Įrašyta\")";
+            $query = "UPDATE filmas SET pavadinimas='$pavadinimas',isleidimo_metai='$metai',trukme='$trukme',aprasymas='$aprasymas',kaina='$kaina',paveiksliukas='$fileNameNew',anonsas='$anonsas' WHERE id='$ID'";
         }
+            $query_run =mysqli_query($conn,$query);
+            if($query_run){
+                echo '<script type="text/javascript"> alert("Data Updated") </script>';
+             }else{
+                 echo '<script type="text/javascript"> alert("Error") </script>';
+             }
+
 ?>

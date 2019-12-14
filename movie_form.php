@@ -21,15 +21,6 @@
         $sql = "SELECT * FROM filmas";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
 
-        /*
-        if (mysqli_num_rows($result) > 0)
-        {
-            while($row = $result->fetch_assoc())
-            {
-                print_r($row);
-            }
-        } */
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,7 +73,7 @@
             <br>
             <p>Nuorada iš Youtube platformos</p>
             <input type="text" size="45" name="anonsas" placeholder="pav. https://www.youtube.com/watch?v=JaRq73y5MJk" 
-             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=(\w)+$" required>
+             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=([a-zA-Z0-9!@#$%^&*\-+=])+$" required>
             <br>
             <br>
             <button class='button' type="submit" name="Pateikti">Pateikti</button>

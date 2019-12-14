@@ -1,3 +1,6 @@
+body{
+    background-color: whitesmoke;
+}
 #div-names{
     margin-left: 120px;
     margin-top: 40px;
@@ -28,6 +31,12 @@
 .film_form {
     margin-left: 120px;
     margin-top: 40px;
+}
+.film_form input{
+    width: 40%;
+    height: 5%;
+    border: 1px;
+    border-radius: 05px;
 }
 .button{
     background-color: #A9A9A9; /* Dark Gray */

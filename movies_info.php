@@ -84,7 +84,7 @@ if(isset($_GET['ID'])){
         </div>
         <div class='info_div'>
             <p>Trukmė: <?php echo $row['trukme'] ?></p>
-            <p>Ivetinimas: <?php echo $row['ivertinimas'] ?></p>
+            <p>Įvetinimas: <?php echo $row['ivertinimas'] ?></p>
             <p>Metai: <?php echo $row['isleidimo_metai'] ?></p>
             <p>Žanrai: <?php foreach ($datas as $data) {
                 echo $data['pavadinimas']." ";
