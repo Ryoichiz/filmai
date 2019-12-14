@@ -307,6 +307,7 @@ public static function printNavbar($location)
 
     public function printDiscountForm($discounts)
     {
+        echo '<h1>Nuolaidų sąrašas</h1>';
             while ($row = mysqli_fetch_assoc($discounts)) {
                 echo'<li class="list-group-item">';
                 echo 'Kodo id: '.$row['id'].' |Kodas: '.$row['kodas'];
