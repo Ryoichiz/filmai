@@ -321,6 +321,44 @@ class Model {
         }
     }
 
+    public function newCode($code, $number)
+    {
+        $conn = $this->conn;
+        $code = $this->secureInput($code);
+        $number = $this->secureInput($number);
+
+        if (empty($code) || empty($number)) {
+            return false;
+        } else {
+            $sql = "SELECT kodas FROM kodo_kurimas WHERE kodas=?";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    return false;
+                } else {
+                    mysqli_stmt_bind_param($stmt, "s", $code);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_store_result($stmt);
+                    $resultCheck = mysqli_stmt_num_rows($stmt);
+                    if ($resultCheck > 0) {
+                        return false;
+                    } else {
+                        $sql = ("SET CHARACTER SET utf16");
+                        $conn->query($sql);
+                        $sql = "INSERT INTO kodo_kurimas (kodas, fk_busena, procentas) VALUES (?, ?, ?)";
+                        $stmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                            return false;
+                        } else {
+                            $fk_busena = "Sukurtas";
+                            mysqli_stmt_bind_param($stmt, "ssi", $code, $fk_busena, $number);
+                            mysqli_stmt_execute($stmt);
+                            return true;
+                        }
+                    }
+                }
+        }
+    }
+
         public function secureInput($input)
     {
         $input = mysqli_real_escape_string($this->conn, $input);

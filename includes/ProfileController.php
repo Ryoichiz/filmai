@@ -30,8 +30,6 @@ class ProfileController extends MainController implements iController
 
                 $controller = new model();
                 $conn = $controller->returnConn();
-                $username = $controller->secureInput($_SESSION['vardas']);
-
 
             $this->getView()->printSettingsForm($row['vardas'], $row['pavarde'],
                 $row['el_pastas']);

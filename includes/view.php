@@ -267,7 +267,7 @@ public static function printNavbar($location)
             }
         }
 
-            public function printEditUserAsAdmin($content)
+    public function printEditUserAsAdmin($content)
     {
         echo ' <form method="POST" class="mainForm">
             <h1>Koreguojamas '.$content['vardas'].' profilis</h1>
@@ -302,6 +302,28 @@ public static function printNavbar($location)
             <button type="submit" name="request" value="slaptazodisSubmit" class="btn btn-danger">Keisti slaptažodį</button>
         </form>';
 
+    }
+
+    public function printDiscountForm($discounts)
+    {
+            while ($row = mysqli_fetch_assoc($discounts)) {
+                echo'<li class="list-group-item">';
+                echo 'Kodo id: '.$row['id'].' |Kodas: '.$row['kodas'];
+                echo " |Kodo nuolaida(procentais): ".$row['procentas'];
+                echo '</li>';
+            }
+            echo '<form method="POST" class="mainForm">
+            <h1>Kodo kurimo forma</h1>
+            <div class="form-group">
+                <label for="inputFor">Naujas kodas</label>
+                <input type="text" class="form-control" name="kodas" id="inputFor" name="kodas" placeholder="Naujas kodas">
+            </div>
+            <div class="form-group">
+                <label for="inputFor">Kodo nuolaida(procentais 0-100)</label>
+                <input type="number" min=1 max=100 class="form-control" name="kodoproc" id="inputFor" name="naujanuolaida" placeholder="nuolaida">
+            </div>
+            <button type="submit" name="codeRequestBtn" value="createCode" class="btn btn-primary">Kurti koda</button>
+        </form>';
     }
 
 
