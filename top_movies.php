@@ -52,7 +52,7 @@
         {
             while($row = $result->fetch_assoc())
             {
-                echo '<div><center><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200"></center><br>';
+                echo '<div id=\'top\'><center><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200"></center><br>';
                 echo "<center><a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><center> </div>";
             }
         }else {
