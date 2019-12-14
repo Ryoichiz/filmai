@@ -119,6 +119,60 @@ public static function printNavbar($location)
         </form>';
     }
 
+        public function printCatalogSearchResults($catalogList, $themeAnsList)
+    {
+        if ($catalogList->num_rows > 0)
+        {
+            echo '<h1>Atrinkti katalogai:</h1>
+            <ul class="list-group">';
+
+            while ($row = $catalogList->fetch_assoc())
+            {
+                echo '<a href="./themes.php?id='.$row['id'].'"><li class="list-group-item">'.$row['pavadinimas'].'</li></a>';
+            }
+
+            echo '</ul>';
+        }
+        else
+        {
+            echo '<h2>Rastu katalogu nera!</h2>';
+        }
+
+        if ($themeAnsList->num_rows > 0)
+        {
+            echo '<h1>Atrinktos temos su temu atsakymais:</h1>
+            <div class="list-group">';
+
+            while($row = $themeAnsList->fetch_assoc())
+            {
+                echo '  <a href="./viewtheme.php?id='.$row['id'].'" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">'.$row['pavadinimas'].'</h5>
+                </div>
+                <p class="mb-1">'.$row['tekstas'].'</p>
+              </a>';
+            }
+
+            echo '</div>';
+        }
+        else
+        {
+            echo '<h2>Rastu temu nera!</h2>';
+        }
+
+    }
+
+        public function printSearchPage($searchText)
+    {
+        echo '<form method="POST">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Raktažodis paieškai</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" value="' . $searchText . '" name="searchText" placeholder="Raktažodis paieškai">
+            </div>
+            <button type="submit" name="searchBtn" class="btn btn-primary">Ieškoti</button>
+        </form>';
+    }
+
         public function printLoginPage()
     {
         echo '
@@ -325,6 +379,18 @@ public static function printNavbar($location)
                 <input type="number" min=1 max=100 class="form-control" name="kodoproc" id="inputFor" name="naujanuolaida" placeholder="nuolaida">
             </div>
             <button type="submit" name="codeRequestBtn" value="createCode" class="btn btn-primary">Kurti koda</button>
+        </form>';
+    }
+
+        public function printDiscount()
+    {
+            echo '<form method="POST" class="mainForm">
+            <h1>Nuolaidos pritaikymas</h1>
+            <div class="form-group">
+                <input type="text" class="form-control" name="kodas" id="inputFor" name="kodas" placeholder="Kodas">
+            </div>
+            <button type="submit" name="codePutBtn" value="putCode" class="btn btn-primary">Kurti koda</button>
+            <button type="submit" name="codeTakeBtn" value="takeCode" class="btn btn-danger">Nuimti koda</button>
         </form>';
     }
 

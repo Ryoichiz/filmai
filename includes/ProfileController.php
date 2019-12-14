@@ -9,12 +9,6 @@ class ProfileController extends MainController implements iController
     }
 
     // settings.php
-    public function Connection()
-    {
-        $controller = new model();
-        $conn = $controller->returnConn();
-        return $conn;
-    }
 
     public function printPageView()
     {

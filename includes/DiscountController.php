@@ -1,11 +1,17 @@
 <?php
 
-
 class DiscountController extends  MainController implements iController
 {
     public function __construct()
     {
         parent::__construct();
+    }
+
+        public function Connection()
+    {
+        $controller = new model();
+        $conn = $controller->returnConn();
+        return $conn;
     }
 
         public function printPageView()
@@ -39,6 +45,39 @@ class DiscountController extends  MainController implements iController
             	}
             }
     }
+
+        public function printDiscountView($id)
+        {
+            if($_SESSION['role'] !== "Administratorius") {
+
+            //$ip = $this->getModel()->getIP();
+            //$this->getModel()->updateLog("Bandymas prieiti prie puslapio be teisės", $ip);
+            $this->redirect_to_another_page('index.php', 0);
+            }
+
+                $this->getView()->printDiscount();
+                if (isset($_POST['codePutBtn']))
+                {
+                    $id = $this->getModel()->secureInput($id);
+                    $cost = $_POST['kodas'];
+                    $row = $this->getModel()->getDataByString('kodo_kurimas', 'kodas', $cost);
+                    if (!empty($cost) && !empty($id))
+                    {
+                        if($this->getModel()->updateDataOneColumn("filmas",$id,"fk_nuolaida",$row['id']))
+                        {
+                            $this->getView()->printSuccess('Pridėta nuolaida');
+                            $this->redirect_to_another_page('movies.php', 1);
+                        }else
+                        {
+                            $this->getView()->printDanger('Klaida');
+                        }
+                    }
+                    else
+                    {
+                        $this->getView()->printDanger('Klaida');    
+                    }
+                }
+        }
 
         public function getTitle()
     {

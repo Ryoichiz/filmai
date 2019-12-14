@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('includes/loadControl.php');
-$controller = new ProfileController();
+$controller = new DiscountController();
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,7 +30,9 @@ $controller = new ProfileController();
 
       <div class='container'>
           <?php
-            $controller->printPageView();
+          $conn = $controller->Connection();
+            $ID = mysqli_real_escape_string($conn, $_GET['ID']);
+            $controller->printDiscountView($ID);
             //$connect = $controller->Connection();
           ?>
       </div>
