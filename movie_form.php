@@ -61,23 +61,28 @@
             <br>
             <label>Pasirinkite filmo paveiksliuką</label>
             <br>
-            <input type="file" name="file" required >
+            <input type="file" name="paveiksliukas" required >
             <br>
             <br>
             <p>Įveskite išleidimo metus</p>
-            <input type="number"  name="metai" placeholder="pav. 2012" min="0" max="300" required>m.
+            <input type="number"  name="metai" placeholder="pav. 2012" min="0" required>m.
             <br>
             <br>
             <p>Įveskite filmo trukmę minutemis</p>
             <input type="number"  name="trukme" placeholder="pav. 120" min="0" max="300" required>min.
             <br>
             <br>
+            <p>Filmo aprašymas</p>
+            <textarea name="aprasymas" cols="118" rows="5" required></textarea>
+            <br>
+            <br>
             <p>Įveskite filmo kainą</p>
-            <input type="number"  name="kaina" placeholder="pav. 24.40" min="0" max="300" required>eur.
+            <input type="text"  name="kaina" placeholder="pav. 24.40" min="0" pattern="[0-9]+([\.][0-9]{0,2})?" required>eur.
             <br>
             <br>
             <p>Nuorada iš Youtube platformos</p>
-            <input type="text" size="45" name="anonsas" placeholder="pav. https://www.youtube.com/watch?v=JaRq73y5MJk" required>
+            <input type="text" size="45" name="anonsas" placeholder="pav. https://www.youtube.com/watch?v=JaRq73y5MJk" 
+             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=(\w)+$" required>
             <br>
             <br>
             <button class='button' type="submit" name="Pateikti">Pateikti</button>

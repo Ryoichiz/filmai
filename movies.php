@@ -53,8 +53,11 @@
             ?>
         </div>
     </nav>
-
-    <div class='insert-button'> <a href="movie_form.php">Naujas filmas</a></div>
+    <?php
+    if($_SESSION['role'] == 'Administratorius'){
+    	echo "<div class='insert-button'> <a href=\"movie_form.php\">Naujas filmas</a></div>";
+	}
+	?>
 
 
     <div id='div-names'>
