@@ -55,7 +55,7 @@ class DiscountController extends  MainController implements iController
             $this->redirect_to_another_page('index.php', 0);
             }
                 $id = $this->getModel()->secureInput($id);
-                $row = $this->getModel()->getDataByString('filmas', 'fk_nuolaida', $id);
+                $row = $this->getModel()->getDataByString('filmas', 'id', $id);
                 if ($row['fk_nuolaida'] !== NULL)
                 {
                     $row2 = $this->getModel()->getDataByColumnFirst('kodo_kurimas', 'id', $row['fk_nuolaida']);
@@ -67,9 +67,10 @@ class DiscountController extends  MainController implements iController
                 if (isset($_POST['codePutBtn']))
                 {
                     $cost = $_POST['kodas'];
+                    $row3 = $this->getModel()->getDataByString('kodo_kurimas', 'kodas', $cost);
                     if (!empty($cost) && !empty($id))
                     {
-                        if($this->getModel()->updateDataOneColumn("filmas",$id,"fk_nuolaida",$row['id']))
+                        if($this->getModel()->updateDataOneColumn("filmas",$id,"fk_nuolaida",$row3['id']))
                         {
                             $this->getView()->printSuccess('Pridėta nuolaida');
                             $this->redirect_to_another_page('movies.php', 1);
@@ -81,6 +82,26 @@ class DiscountController extends  MainController implements iController
                     else
                     {
                         $this->getView()->printDanger('Klaida');    
+                    }
+                }
+                 if (isset($_POST['codeTakeBtn']))
+                {
+                    if($row['fk_nuolaida'] !== NULL)
+                    {
+                        $temp = "Tuscias";
+                        $row = $this->getModel()->getDataByString('kodo_kurimas', 'kodas', $temp);
+                        if($this->getModel()->updateDataOneColumn("filmas",$id,"fk_nuolaida",$row['id']))
+                        {
+                            $this->getView()->printSuccess('Nuimta nuolaida');
+                        }
+                        else
+                        {
+                            $this->getView()->printDanger('Klaida');
+                        }
+                    }
+                    else
+                    {
+                        $this->getView()->printDanger('Klaida');  
                     }
                 }
         }

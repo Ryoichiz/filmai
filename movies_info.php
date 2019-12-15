@@ -42,9 +42,14 @@ if(isset($_GET['ID'])){
         //var_dump($datas);
 
         $row = mysqli_fetch_array($result);
+
+        $discount = $row['fk_nuolaida'];
+        $sql2 = "SELECT * FROM kodo_kurimas WHERE id='$discount'";
+        $result2 = mysqli_query($conn, $sql2) or die ("Bad Querry: $sql2");
+        $row2 = mysqli_fetch_array($result2);
+        $procent = $row2['procentas'];
     }else
     header('Location: movies.php');
-
 
 ?>
 <!DOCTYPE html>
@@ -90,7 +95,7 @@ if(isset($_GET['ID'])){
                 echo $data['pavadinimas']." ";
             } 
             ?></p>
-            <p>Kaina: <?php echo $row['kaina'] ?> eur.</p>
+            <p>Kaina: <?php echo ($row['kaina'] - (($procent*$row['kaina'])/100)) ?> eur.</p>
         </div>
         <div class='anonsas'>
             <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
