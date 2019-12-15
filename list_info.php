@@ -18,9 +18,11 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
+        $ID = mysqli_real_escape_string($conn, $_GET['ID']);
         $sql = "SELECT filmas.id, filmas.pavadinimas, filmas.paveiksliukas FROM `sarasas_filmas` 
             JOIN filmas ON fk_filmas = filmas.id
-            JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id";
+            JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
+            WHERE filmu_sarasas.id = '$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
 
         /*
@@ -55,7 +57,10 @@
             ?>
         </div>
     </nav>
-
+    <table class='film_form'><tr><td>
+         Atgal į [<a href="movie_list.php">Filmų sąrasą</a>]
+      </td></tr>
+    </table>
     <div id='div-names'>
     <?php
         if (mysqli_num_rows($result) > 0)
@@ -66,7 +71,7 @@
                 echo "<center><a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><center> </div>";
             }
         }else {
-            echo "<h2>No Titles to display</h2>";
+            echo "<h2>Neturite šiame sąraše jokių filmų</h2>";
         }
      ?>
     </div>

@@ -19,7 +19,7 @@
         }
         $conn->set_charset("utf8");
 
-        $movie_list = "SELECT pavadinimas FROM `naudotojas_sarasas`
+        $movie_list = "SELECT filmu_sarasas.id, pavadinimas FROM `naudotojas_sarasas`
         JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
         JOIN naudotojas ON fk_naudotojas = naudotojas.id
         WHERE naudotojas.id = '$id'";
@@ -70,7 +70,7 @@
         {
             while($row = $movies->fetch_assoc())
             {
-                echo "<div class='film_form'><a href='list_info.php'><h5>{$row['pavadinimas']}</h5></a></div>";
+                echo "<div class='film_form'><a href='list_info.php?ID={$row['id']}''><h5>{$row['pavadinimas']}</h5></a></div>";
             }
         }else {
             echo "<h2>No Titles to display</h2>";
@@ -85,25 +85,34 @@ if(isset($_POST['Pateikti'])){
 
     $name = $_POST['pavadinimas'];
 
-    $query = "INSERT INTO filmu_sarasas (pavadinimas)
+    $check = "SELECT COUNT(id) FROM filmu_sarasas WHERE pavadinimas = '$name'";
+    $checkrez = mysqli_query($conn, $check) or die ("Bad Querry: $check");
+    $checkrow = mysqli_fetch_array($checkrez);
+    
+    if($checkrow['COUNT(id)'] != 0){
+            echo '<script type="text/javascript"> alert("Yra jau toks sąrašas.") </script>';
+        }else{
+
+            $query = "INSERT INTO filmu_sarasas (pavadinimas)
             VALUES ('$name')";
-    $q1result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
+            $q1result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
 
-    $query1 = "SELECT id FROM filmu_sarasas WHERE pavadinimas = '$name'";
-    $q1result = mysqli_query($conn, $query1) or die ("Bad Querry: $query1");
+            $query1 = "SELECT id FROM filmu_sarasas WHERE pavadinimas = '$name'";
+            $q1result = mysqli_query($conn, $query1) or die ("Bad Querry: $query1");
 
-    $q1row = mysqli_fetch_array($q1result);
+            $q1row = mysqli_fetch_array($q1result);
 
-    $list_id = $q1row['id'];
-    $query2 = "INSERT INTO naudotojas_sarasas (fk_naudotojas, fk_sarasas)
-            VALUES ('$id', '$list_id')";
-    //$q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
-        $query_run =mysqli_query($conn,$query2);
+            $list_id = $q1row['id'];
+            $query2 = "INSERT INTO naudotojas_sarasas (fk_naudotojas, fk_sarasas)
+                    VALUES ('$id', '$list_id')";
+            //$q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
+                $query_run =mysqli_query($conn,$query2);
             if($query_run){
                 echo '<script type="text/javascript"> alert("Sukurtas nauajs sąrašas!Atnaujinkite puslapį.") </script>';
              }else{
                 echo '<script type="text/javascript"> alert("Nepavyko sukurti") </script>';
              }
+        }
 
 }
 ?>
