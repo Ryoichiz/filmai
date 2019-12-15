@@ -18,6 +18,12 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
+        $movie_list = "SELECT pavadinimas FROM `naudotojas_sarasas`
+        JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
+        JOIN naudotojas ON fk_naudotojas = naudotojas.id
+        WHERE naudotojas.id = '$id'";
+        $movies = mysqli_query($conn, $movie_list) or die ("Bad Querry: $sql1");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,7 +60,17 @@
     <div class='film_form'>
         <h3>Jūsų sukurti filmų sarašai:</h3>
     </div>
-    
+    <?php
+        if (mysqli_num_rows($movies) > 0)
+        {
+            while($row = $movies->fetch_assoc())
+            {
+                echo "<div class='film_form'><a href='list_info.php'>{$row['pavadinimas']}</a></div>";
+            }
+        }else {
+            echo "<h2>No Titles to display</h2>";
+        }
+     ?>
 	</body>
 </html> 
 
@@ -80,7 +96,7 @@ if(isset($_POST['Pateikti'])){
     //$q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
         $query_run =mysqli_query($conn,$query2);
             if($query_run){
-                echo '<script type="text/javascript"> alert("Sukurtas nauajs sąrašas!") </script>';
+                echo '<script type="text/javascript"> alert("Sukurtas nauajs sąrašas!Atnaujinkite puslapį.") </script>';
              }else{
                 echo '<script type="text/javascript"> alert("Nepavyko sukurti") </script>';
              }
