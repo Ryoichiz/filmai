@@ -89,6 +89,10 @@ if(isset($_GET['ID'])){
             ?>
         </div>
     </nav>
+    <table class='film_form'><tr><td>
+         Atgal į [<a href="movies.php">Filmų Peržiūrą</a>]
+      </td></tr>
+    </table>
     <?php
     if($_SESSION['role'] == 'Administratorius'){
         echo "<div class='insert-button'> <a href=\"movie_discount.php?ID=$ID\">Nuolaida</a> <a href=\"movie_edit.php?ID=$ID\">Redaguoti</a> <a href=\"movie_delete.php?ID=$ID\">Ištrinti</a></div>";
@@ -144,12 +148,31 @@ if(isset($_POST['Prideti'])){
         $q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
         $q2row = mysqli_fetch_array($q2result);
 
-        $list_id = $q2row['id'];
-        echo $list_id;
-        $query = "INSERT INTO sarasas_filmas (fk_sarasas, fk_filmas)
-            VALUES ('$list_id','$ID')";
-        $q1result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
+        $query3 = "SELECT COUNT(pavadinimas) FROM `sarasas_filmas` 
+            JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
+            WHERE pavadinimas = '$name' AND fk_filmas = '$ID'";
+        $q3result = mysqli_query($conn, $query3) or die ("Bad Querry: $query3");
+        $row5 = mysqli_fetch_array($q3result);
 
+
+        if($row5['COUNT(pavadinimas)'] != 0){
+            echo '<script type="text/javascript"> alert("Jau turite šį filma sąraše.") </script>';
+            print_r($row5);
+        }else{
+
+            $list_id = $q2row['id'];
+            $query = "INSERT INTO sarasas_filmas (fk_sarasas, fk_filmas)
+                VALUES ('$list_id','$ID')";
+            //$q1result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
+
+            $query_run1 =mysqli_query($conn,$query);
+            if($query_run1){
+                echo '<script type="text/javascript"> alert("Sekmingai pridėta į sąraša'.' '.$name.' '.'!") </script>';
+             }else{
+                echo '<script type="text/javascript"> alert("Bandykite dar karta.") </script>';
+             }
+
+        }
 
     }
 ?>

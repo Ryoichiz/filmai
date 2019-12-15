@@ -18,7 +18,7 @@
             die("Connection failed: " . $conn->connect_error);
         }
         $conn->set_charset("utf8");
-        
+
         $movie_list = "SELECT pavadinimas FROM `naudotojas_sarasas`
         JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
         JOIN naudotojas ON fk_naudotojas = naudotojas.id
@@ -48,6 +48,10 @@
             ?>
         </div>
     </nav>
+    <table class='film_form'><tr><td>
+         Atgal į [<a href="profile.php">Profilį</a>]
+      </td></tr>
+    </table>
     <div class='film_form'>
         <form action="" method="POST">
             <div>
@@ -66,7 +70,7 @@
         {
             while($row = $movies->fetch_assoc())
             {
-                echo "<div class='film_form'><a href='list_info.php'>{$row['pavadinimas']}</a></div>";
+                echo "<div class='film_form'><a href='list_info.php'><h5>{$row['pavadinimas']}</h5></a></div>";
             }
         }else {
             echo "<h2>No Titles to display</h2>";
