@@ -78,3 +78,11 @@
     </div>
 	</body>
 </html> 
+<?php 
+
+if(isset($_POST['Prideti'])){
+    $query = "INSERT INTO sarasas_filmas (fk_sarasas, fk_filmas)
+                VALUES ('$list_id','$ID')";
+}
+
+?>
