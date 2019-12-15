@@ -9,9 +9,12 @@ class View
 
 public static function printTop($location)
 {
-    echo '<div class="jumbotron text-center" style="margin-bottom:0">
-    <h1>My First Bootstrap 4 Page</h1>
-    <p>Resize this responsive page to see the effect!</p> 
+    echo'<style>
+        .jumbotron {
+            padding: 13rem 2rem;!important;
+        }
+    </style>';
+    echo '<div class="jumbotron container-fluid" style="background-image: url(uploads/Jumbotron.png); background-size: 100%; margin-bottom:0">
     </div>';
 }
 
