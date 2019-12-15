@@ -3,7 +3,7 @@ if(isset($_GET['ID'])){
 	session_start();
 	include('includes/loadControl.php');
 	$controller = new MainPageController();
-
+    $id = $_SESSION['id'];
     date_default_timezone_set("Europe/Vilnius");
         $dbConfigFile = fopen("./includes/database.config", "r") or die("Unable to open file!");
         $dbConfigFileString =  fgets($dbConfigFile);
@@ -23,7 +23,11 @@ if(isset($_GET['ID'])){
         $sql = "SELECT * FROM filmas WHERE id='$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
 
-        
+        $movie_list = "SELECT pavadinimas FROM `naudotojas_sarasas`
+        JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
+        JOIN naudotojas ON fk_naudotojas = naudotojas.id
+        WHERE naudotojas.id = '$id'";
+        $movies = mysqli_query($conn, $movie_list) or die ("Bad Querry: $sql1");
 
         $sql1 = "SELECT zanrai.pavadinimas
         FROM `filmo_zanrai`
@@ -80,8 +84,19 @@ if(isset($_GET['ID'])){
     }   
     ?>
     <div>
-        <div class='pic_div'>
+        <div class='pic_div' action="" method="POST">
             <img src='uploads/<?php echo $row['paveiksliukas'] ?>' height="600" width="400">
+            <form>
+                <br>
+                <label>Pridėk į sąraša!</label>
+                <select name="list">
+                <option value=""></option>
+                <?php while($row2 = mysqli_fetch_array($movies)):;   ?>
+                <option value=<?php echo "'".$row2[0]."' "; if(isset($_GET['pavadinimas'])) if($_GET['pavadinimas'] == $row2[0]) echo "selected" ?>><?php echo $row2[0];  ?> </option>
+            <?php endwhile; ?>
+        </select>
+                <button class='button' type="submit" name="Prideti">Pridėti</button>
+            </form>
         </div>
         <div id='div-info'>
             <h1><?php echo $row['pavadinimas'] ?></h1>
@@ -104,3 +119,6 @@ if(isset($_GET['ID'])){
     </div>
 	</body>
 </html> 
+<?php 
+
+?>
