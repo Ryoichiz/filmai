@@ -147,9 +147,9 @@
 
         $query_run =mysqli_query($conn,$query);
             if($query_run){
-                echo '<script type="text/javascript"> alert("Data Updated") </script>';
+                echo '<script type="text/javascript"> alert("Atnaujinta!") </script>';
              }else{
-                 die ("Klaida įrašant:" .mysqli_error($conn));
+                echo '<script type="text/javascript"> alert("Atnaujinti nepavyko") </script>';
              }
     }
 ?>

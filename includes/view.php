@@ -190,7 +190,7 @@ public static function printNavbar($location)
         </form>';
     }
 
-        public function printSettingsForm($username, $surname, $email)
+        public function printSettingsForm($username, $surname, $email, $id)
     {
         echo '<a href="movie_list.php"><button type="button" class="mt-2 btn btn-primary btn-sm float-right ">Filmų Sąrašas</button> </a>';
         echo '<form method=\'POST\' class=\'mainForm mt-2\'>

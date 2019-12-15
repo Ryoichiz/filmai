@@ -26,7 +26,7 @@ class ProfileController extends MainController implements iController
                 $conn = $controller->returnConn();
 
             $this->getView()->printSettingsForm($row['vardas'], $row['pavarde'],
-                $row['el_pastas']);
+                $row['el_pastas'], $row['id']);
             $this->getView()->printChangePasswordForm();
             $this->getView()->printDeleteButton();
         }
