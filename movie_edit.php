@@ -23,6 +23,7 @@
         $sql = "SELECT * FROM filmas WHERE id ='$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
         $row = mysqli_fetch_array($result);
+        $apr = $row['aprasymas'];
     }else{
         header('Location: movies.php?Nera tokio id');
     }
@@ -86,7 +87,7 @@
             <br>
             <br>
             <p>Filmo aprašymas</p>
-            <textarea name="aprasymas" cols="118" rows="5" ><?php echo $row['aprasymas']; ?></textarea>
+            <textarea name="aprasymas" cols="118" rows="5" ><?php echo $apr ?></textarea>
             <br>
             <br>
             <p>Įveskite filmo kainą</p>
@@ -148,7 +149,7 @@
             if($query_run){
                 echo '<script type="text/javascript"> alert("Data Updated") </script>';
              }else{
-                 echo '<script type="text/javascript"> alert("Error") </script>';
+                 die ("Klaida įrašant:" .mysqli_error($conn));
              }
     }
 ?>

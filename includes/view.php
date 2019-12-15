@@ -208,13 +208,13 @@ public static function printNavbar($location)
                     <input type="email" name="email" class="form-control" id="inputFor" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$email.'">
                 </div>
                 </div>
-                    <button type="submit" name="saveSettingsBtn" class="btn btn-primary">Išsaugoti nustatymus</button>
+                    <div class=\'container\'><button type="submit" name="saveSettingsBtn" class="btn btn-primary">Išsaugoti nustatymus</button></div><br>
             </form>';
     }
 
         public function printChangePasswordForm()
     {
-        echo '<form method=\'POST\' class=\'mainForm\'>
+        echo '<div class=\'container\'><form method=\'POST\' class=\'mainForm\'>
                 <h1>Slaptažodžio keitimo forma</h1>
                 <div class="form-group">
                     <label for="inputFor">Dabartinis slaptažodis</label>
@@ -229,7 +229,7 @@ public static function printNavbar($location)
                     <input type="password"  name="repeatNewPasswd" class="form-control" id="inputFor" placeholder="Naujas slaptažodis">
                 </div>
                 <button type="submit" name="changePasswdBtn" class="btn btn-danger">Keisti slaptažodį</button>
-            </form>';
+            </form></div>';
     }
 
         public function printDeleteButton()

@@ -71,7 +71,7 @@ if(isset($_GET['ID'])){
     </nav>
     <?php
     if($_SESSION['role'] == 'Administratorius'){
-        echo "<div class='insert-button'> <a href=\"movie_discount.php?ID=$ID\">Nuolaida</a> <a href=\"movie_edit.php?ID=$ID&name=\">Redaguoti</a> <a href=\"movie_delete.php?ID=$ID\">Ištrinti</a></div>";
+        echo "<div class='insert-button'> <a href=\"movie_discount.php?ID=$ID\">Nuolaida</a> <a href=\"movie_edit.php?ID=$ID\">Redaguoti</a> <a href=\"movie_delete.php?ID=$ID\">Ištrinti</a></div>";
     }   
     ?>
     <div>
