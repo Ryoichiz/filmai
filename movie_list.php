@@ -17,7 +17,8 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-
+        $conn->set_charset("utf8");
+        
         $movie_list = "SELECT pavadinimas FROM `naudotojas_sarasas`
         JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
         JOIN naudotojas ON fk_naudotojas = naudotojas.id

@@ -21,6 +21,7 @@ if(isset($_GET['ID'])){
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+        $conn->set_charset("utf8");
 
         $ID = mysqli_real_escape_string($conn, $_GET['ID']);
         $sql = "SELECT * FROM filmas WHERE id='$ID'";
@@ -94,9 +95,9 @@ if(isset($_GET['ID'])){
     }   
     ?>
     <div>
-        <div class='pic_div' action="movies_info.php?ID=$ID" method="POST">
+        <div class='pic_div'>
             <img src='uploads/<?php echo $row['paveiksliukas'] ?>' height="600" width="400">
-            <form>
+            <form action="" method="POST">
                 <br>
                 <label>Pridėk į sąraša!</label>
                 <select name="list">
@@ -129,9 +130,10 @@ if(isset($_GET['ID'])){
     </div>
 	</body>
 </html> 
-<?php
-    
-    if(isset($_POST['Prideti'])){
+
+<?php 
+
+if(isset($_POST['Prideti'])){
         
         $name = $_POST['list'];
 
@@ -140,7 +142,7 @@ if(isset($_GET['ID'])){
         JOIN naudotojas ON fk_naudotojas = naudotojas.id
         WHERE pavadinimas='$name'";
         $q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
-        $q2row = mysqli_fetch_array($q1result);
+        $q2row = mysqli_fetch_array($q2result);
 
         $list_id = $q2row['id'];
         echo $list_id;
@@ -148,6 +150,6 @@ if(isset($_GET['ID'])){
             VALUES ('$list_id','$ID')";
         $q1result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
 
-    }
 
+    }
 ?>
