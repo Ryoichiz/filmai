@@ -50,7 +50,7 @@
 		<?php
     	MainController::printTopBar("list_movie.php");
     	?>
-    	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    	<nav class="navbar navbar-expand-lg navbar-inverse bg-dark">
         <div class='container'>
             <?php
                 MainController::printNavigationBar("profile.php");
