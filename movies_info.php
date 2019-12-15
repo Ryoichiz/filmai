@@ -157,7 +157,6 @@ if(isset($_POST['Prideti'])){
 
         if($row5['COUNT(pavadinimas)'] != 0){
             echo '<script type="text/javascript"> alert("Jau turite šį filma sąraše.") </script>';
-            print_r($row5);
         }else{
 
             $list_id = $q2row['id'];
