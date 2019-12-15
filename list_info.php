@@ -24,6 +24,8 @@
             JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
             WHERE filmu_sarasas.id = '$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
+        //$row9 = mysqli_fetch_array($result);
+        //$filmo_id = $row9['id'];
 
         /*
         if (mysqli_num_rows($result) > 0)
@@ -69,7 +71,7 @@
             {
                 echo '<div class=\'film_form\'><img src="uploads/'.$row['paveiksliukas'].'" height="120" width="80">';
                 echo " <a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a></div><br>";
-                echo '<div class=\'margin\'><form action="" method="POST"><button class="delete_button" type="submit" name="Trinti">Trinti</button></form></div><br>';
+                echo '<div class=\'margin\'><form action="" method="POST"><input type="hidden" name="filmoid" value="'.$row['id'].'"><button class="delete_button" type="submit" name="Trinti">Trinti</button></form></div><br>';
             }
         }else {
             echo "<h2>Neturite šiame sąraše jokių filmų</h2>";
@@ -80,9 +82,19 @@
 </html> 
 <?php 
 
-if(isset($_POST['Prideti'])){
-    $query = "INSERT INTO sarasas_filmas (fk_sarasas, fk_filmas)
-                VALUES ('$list_id','$ID')";
+if(isset($_POST['Trinti'])){
+
+    $filmo_id = $_POST['filmoid'];
+    //echo $filmo_id;
+
+    $query = "DELETE FROM sarasas_filmas WHERE fk_filmas = '$filmo_id'";
+    $result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
+    $query_run1 =mysqli_query($conn,$query);
+            if($query_run1){
+                echo '<script type="text/javascript"> alert("Filmas ištrintas") </script>';
+             }else{
+                echo '<script type="text/javascript"> alert("Bandykite dar karta.") </script>';
+             }
 }
 
 ?>
