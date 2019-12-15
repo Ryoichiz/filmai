@@ -40,6 +40,11 @@ body{
     margin-left: 120px;
     margin-top: 40px;
 }
+.film_form1 {
+    margin-left: 120px;
+    margin-top: 40px;
+    display: inline-block;
+}
 .film_form input{
     width: 40%;
     height: 5%;
@@ -74,4 +79,17 @@ body{
 }
 .anonsas{
      text-align: center;
+}
+.delete_button{
+    background-color:#f44336; /* Dark Gray */
+    border: 1px solid #555555; /* Dim Gray */
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.margin{
+    margin-left: 120px;
 }

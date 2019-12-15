@@ -61,14 +61,15 @@
          Atgal į [<a href="movie_list.php">Filmų sąrasą</a>]
       </td></tr>
     </table>
-    <div id='div-names'>
+    <div>
     <?php
         if (mysqli_num_rows($result) > 0)
         {
             while($row = $result->fetch_assoc())
             {
-                echo '<div id=\'inline\'><center><img src="uploads/'.$row['paveiksliukas'].'" height="300" width="200"></center><br>';
-                echo "<center><a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a><center> </div>";
+                echo '<div class=\'film_form\'><img src="uploads/'.$row['paveiksliukas'].'" height="120" width="80">';
+                echo " <a href='movies_info.php?ID={$row['id']}'>{$row['pavadinimas']}</a></div><br>";
+                echo '<div class=\'margin\'><form action="" method="POST"><button class="delete_button" type="submit" name="Trinti">Trinti</button></form></div><br>';
             }
         }else {
             echo "<h2>Neturite šiame sąraše jokių filmų</h2>";
