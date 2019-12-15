@@ -87,7 +87,8 @@ class ProfileController extends MainController implements iController
             //$this->getModel()->updateLog("Bandymas prieiti prie puslapio be teisės", $ip);
             $this->redirect_to_another_page('index.php', 0);
         }
-        
+        $list = $this->getModel()->getSells();
+        $this->getView()->printSellForm($list);
     }
 
     public function getTitle()

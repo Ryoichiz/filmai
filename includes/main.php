@@ -359,6 +359,23 @@ class Model {
         }
     }
 
+    public function getSells()
+    {
+        $sql = "SELECT * FROM naudotojas 
+        INNER JOIN krepselis ON naudotojas.id=krepselis.fk_naudotojo_id
+        INNER JOIN sandoris ON krepselis.id=sandoris.fk_krepselio_id";
+        if($result = $this->conn->query($sql))
+        {
+            return $result;
+        }
+        else
+        {
+            echo mysqli_error($this->conn);
+            return false;
+        }
+    }
+
+
     public function getMovieListByPattern($pattern)
     {
         $pattern = $this->secureInput($pattern);

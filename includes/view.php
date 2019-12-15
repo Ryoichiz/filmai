@@ -399,8 +399,7 @@ public static function printNavbar($location)
                 echo '<h1>Pirkinių sąrašas</h1>';
             while ($row = mysqli_fetch_assoc($sells)) {
                 echo'<li class="list-group-item">';
-                echo 'Kodo id: '.$row['id'].' |Kodas: '.$row['kodas'];
-                echo " |Kodo nuolaida(procentais): ".$row['procentas'];
+                echo 'Pirkimo data: '.$row['pirkimo_data'].' |Filmų kiekis: '.$row['prekiu_suma'].' |Kaina: '.$row['kaina'];
                 echo '</li>';
             }
     }
