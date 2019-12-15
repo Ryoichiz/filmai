@@ -192,8 +192,8 @@ public static function printNavbar($location)
 
         public function printSettingsForm($username, $surname, $email)
     {
-        echo '
-            <form method=\'POST\' class=\'mainForm\'>
+        echo '<a href="movie_list.php"><button type="button" class="mt-2 btn btn-primary btn-sm float-right ">Filmų Sąrašas</button> </a>';
+        echo '<form method=\'POST\' class=\'mainForm mt-2\'>
                 <h1>Profilio nustatymai</h1>
                 <div class="form-group">
                     <label for="inputFor">Slapyvardis*</label>
@@ -394,7 +394,18 @@ public static function printNavbar($location)
         </form>';
     }
 
-
+            public function printDiscountWith($code, $procent)
+    {
+            echo '<form method="POST" class="mainForm">
+            <h1>Nuolaidos pritaikymas</h1>
+            Dabartinis kodas: '.$code.' Nuolaida: '.$procent.'
+            <div class="form-group">
+                <input type="text" class="form-control" name="kodas" id="inputFor" name="kodas" placeholder="Kodas">
+            </div>
+            <button type="submit" name="codePutBtn" value="putCode" class="btn btn-primary">Kurti koda</button>
+            <button type="submit" name="codeTakeBtn" value="takeCode" class="btn btn-danger">Nuimti koda</button>
+        </form>';
+    }
 
 }
 

@@ -54,13 +54,19 @@ class DiscountController extends  MainController implements iController
             //$this->getModel()->updateLog("Bandymas prieiti prie puslapio be teisės", $ip);
             $this->redirect_to_another_page('index.php', 0);
             }
-
-                $this->getView()->printDiscount();
+                $id = $this->getModel()->secureInput($id);
+                $row = $this->getModel()->getDataByString('filmas', 'fk_nuolaida', $id);
+                if ($row['fk_nuolaida'] !== NULL)
+                {
+                    $row2 = $this->getModel()->getDataByColumnFirst('kodo_kurimas', 'id', $row['fk_nuolaida']);
+                    $this->getView()->printDiscountWith($row2['kodas'], $row2['procentas']);
+                } else
+                {
+                    $this->getView()->printDiscount();
+                }
                 if (isset($_POST['codePutBtn']))
                 {
-                    $id = $this->getModel()->secureInput($id);
                     $cost = $_POST['kodas'];
-                    $row = $this->getModel()->getDataByString('kodo_kurimas', 'kodas', $cost);
                     if (!empty($cost) && !empty($id))
                     {
                         if($this->getModel()->updateDataOneColumn("filmas",$id,"fk_nuolaida",$row['id']))
