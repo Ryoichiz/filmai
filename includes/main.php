@@ -359,20 +359,18 @@ class Model {
         }
     }
 
-    public function getCatalogListByPattern($pattern)
+    public function getMovieListByPattern($pattern)
     {
         $pattern = $this->secureInput($pattern);
-        $sql = "SELECT id, pavadinimas
-                FROM katalogai
-                WHERE katalogai.pavadinimas LIKE '%$pattern%'";
+        $sql = "SELECT id, pavadinimas FROM filmas WHERE filmas.pavadinimas LIKE '%$pattern%'";
         if($result = $this->conn->query($sql))
         {
             return $result;
         }
         else
         {
-            $ip = $this->getIP();
-            $this->updateLog("Duombzės užklausos erroras: ".mysqli_error($this->conn)."", $ip);
+            //$ip = $this->getIP();
+            //$this->updateLog("Duombzės užklausos erroras: ".mysqli_error($this->conn)."", $ip);
             echo mysqli_error($this->conn);
             return false;
         }

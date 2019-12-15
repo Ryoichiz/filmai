@@ -122,45 +122,23 @@ public static function printNavbar($location)
         </form>';
     }
 
-        public function printCatalogSearchResults($catalogList, $themeAnsList)
+        public function printMovieSearchResults($movieList)
     {
-        if ($catalogList->num_rows > 0)
+        if ($movieList->num_rows > 0)
         {
-            echo '<h1>Atrinkti katalogai:</h1>
+            echo '<h1>Atrinkti filmai:</h1>
             <ul class="list-group">';
 
-            while ($row = $catalogList->fetch_assoc())
+            while ($row = $movieList->fetch_assoc())
             {
-                echo '<a href="./themes.php?id='.$row['id'].'"><li class="list-group-item">'.$row['pavadinimas'].'</li></a>';
+                echo '<a href="./movies_info.php?ID='.$row['id'].'"><li class="list-group-item">'.$row['pavadinimas'].'</li></a>';
             }
 
             echo '</ul>';
         }
         else
         {
-            echo '<h2>Rastu katalogu nera!</h2>';
-        }
-
-        if ($themeAnsList->num_rows > 0)
-        {
-            echo '<h1>Atrinktos temos su temu atsakymais:</h1>
-            <div class="list-group">';
-
-            while($row = $themeAnsList->fetch_assoc())
-            {
-                echo '  <a href="./viewtheme.php?id='.$row['id'].'" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">'.$row['pavadinimas'].'</h5>
-                </div>
-                <p class="mb-1">'.$row['tekstas'].'</p>
-              </a>';
-            }
-
-            echo '</div>';
-        }
-        else
-        {
-            echo '<h2>Rastu temu nera!</h2>';
+            echo '<h2>Rastu filmų nera!</h2>';
         }
 
     }
@@ -195,7 +173,13 @@ public static function printNavbar($location)
 
         public function printSettingsForm($username, $surname, $email, $id)
     {
-        echo '<a href="movie_list.php"><button type="button" class="mt-2 btn btn-primary btn-sm float-right ">Filmų Sąrašas</button> </a>';
+        echo'<style>
+        .mt-2 {
+            margin-right: 1rem ;!important;
+        }
+        </style>';
+        echo '<a href="movie_list.php"><button type="button" class="mt-2 btn btn-primary btn-sm float-right ">Filmų Sąrašas</button> </a>
+            <a href="movie_sells.php"><button type="button" class="mt-2 btn btn-primary btn-sm float-right ">Pirkinių sąrašas</button> </a>';
         echo '<form method=\'POST\' class=\'mainForm mt-2\'>
                 <h1>Profilio nustatymai</h1>
                 <div class="form-group">
@@ -408,6 +392,17 @@ public static function printNavbar($location)
             <button type="submit" name="codePutBtn" value="putCode" class="btn btn-primary">Kurti koda</button>
             <button type="submit" name="codeTakeBtn" value="takeCode" class="btn btn-danger">Nuimti koda</button>
         </form>';
+    }
+
+        public function printSellForm($sells)
+    {
+                echo '<h1>Pirkinių sąrašas</h1>';
+            while ($row = mysqli_fetch_assoc($sells)) {
+                echo'<li class="list-group-item">';
+                echo 'Kodo id: '.$row['id'].' |Kodas: '.$row['kodas'];
+                echo " |Kodo nuolaida(procentais): ".$row['procentas'];
+                echo '</li>';
+            }
     }
 
 }

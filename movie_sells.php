@@ -30,7 +30,7 @@ $controller = new ProfileController();
 
       <div class='container'>
           <?php
-            $controller->printPageView();
+            $controller->printPageSells();
             //$connect = $controller->Connection();
           ?>
       </div>

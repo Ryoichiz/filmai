@@ -80,6 +80,16 @@ class ProfileController extends MainController implements iController
         }
     }
 
+    public function printPageSells()
+    {
+        if($_SESSION['role'] !== "Naudotojas" && $_SESSION['role'] !== "Administratorius") {
+            //$ip = $this->getModel()->getIP();
+            //$this->getModel()->updateLog("Bandymas prieiti prie puslapio be teisės", $ip);
+            $this->redirect_to_another_page('index.php', 0);
+        }
+        
+    }
+
     public function getTitle()
     {
         echo 'Filmų profilio - Nustatymai';

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('includes/loadControl.php');
-$controller = new ForumController();
+$controller = new SearchController();
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,7 +17,7 @@ $controller = new ForumController();
     <title><?php $controller->getTitle() ?></title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-inverse bg-dark">
     <div class='container'>
         <?php
         MainController::printNavigationBar("forum.php");
