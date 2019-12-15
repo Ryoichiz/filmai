@@ -2,6 +2,9 @@
 if(isset($_GET['ID'])){
 	session_start();
 	include('includes/loadControl.php');
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL); 
 	$controller = new MainPageController();
     $id = $_SESSION['id'];
     date_default_timezone_set("Europe/Vilnius");
@@ -23,12 +26,18 @@ if(isset($_GET['ID'])){
         $sql = "SELECT * FROM filmas WHERE id='$ID'";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
 
-        $movie_list = "SELECT pavadinimas FROM `naudotojas_sarasas`
+        $movie_list = "SELECT filmu_sarasas.id, pavadinimas FROM `naudotojas_sarasas`
         JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
         JOIN naudotojas ON fk_naudotojas = naudotojas.id
         WHERE naudotojas.id = '$id'";
         $movies = mysqli_query($conn, $movie_list) or die ("Bad Querry: $sql1");
-
+         /*if (mysqli_num_rows($movies) > 0)
+        {
+            while($row3 = $movies->fetch_assoc())
+            {
+                print_r($row3);
+            }
+        } */
         $sql1 = "SELECT zanrai.pavadinimas
         FROM `filmo_zanrai`
         JOIN filmas ON fk_filmo_id = filmas.id 
@@ -52,6 +61,7 @@ if(isset($_GET['ID'])){
         $result2 = mysqli_query($conn, $sql2) or die ("Bad Querry: $sql2");
         $row2 = mysqli_fetch_array($result2);
         $procent = $row2['procentas'];
+
     }else
     header('Location: movies.php');
 
@@ -84,7 +94,7 @@ if(isset($_GET['ID'])){
     }   
     ?>
     <div>
-        <div class='pic_div' action="" method="POST">
+        <div class='pic_div' action="movies_info.php?ID=$ID" method="POST">
             <img src='uploads/<?php echo $row['paveiksliukas'] ?>' height="600" width="400">
             <form>
                 <br>
@@ -92,7 +102,7 @@ if(isset($_GET['ID'])){
                 <select name="list">
                 <option value=""></option>
                 <?php while($row2 = mysqli_fetch_array($movies)):;   ?>
-                <option value=<?php echo "'".$row2[0]."' "; if(isset($_GET['pavadinimas'])) if($_GET['pavadinimas'] == $row2[0]) echo "selected" ?>><?php echo $row2[0];  ?> </option>
+                <option value=<?php echo "'".$row2[1]."' "; if(isset($_GET['pavadinimas'])) if($_GET['pavadinimas'] == $row2[1]) echo "selected" ?>><?php echo $row2[1];  ?> </option>
             <?php endwhile; ?>
         </select>
                 <button class='button' type="submit" name="Prideti">Pridėti</button>
@@ -119,6 +129,25 @@ if(isset($_GET['ID'])){
     </div>
 	</body>
 </html> 
-<?php 
+<?php
+    
+    if(isset($_POST['Prideti'])){
+        
+        $name = $_POST['list'];
+
+        $query2 = "SELECT filmu_sarasas.id, pavadinimas FROM `naudotojas_sarasas`
+        JOIN filmu_sarasas ON fk_sarasas = filmu_sarasas.id
+        JOIN naudotojas ON fk_naudotojas = naudotojas.id
+        WHERE pavadinimas='$name'";
+        $q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
+        $q2row = mysqli_fetch_array($q1result);
+
+        $list_id = $q2row['id'];
+        echo $list_id;
+        $query = "INSERT INTO sarasas_filmas (fk_sarasas, fk_filmas)
+            VALUES ('$list_id','$ID')";
+        $q1result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
+
+    }
 
 ?>

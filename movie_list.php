@@ -79,7 +79,6 @@
 if(isset($_POST['Pateikti'])){
 
     $name = $_POST['pavadinimas'];
-    echo $name;
 
     $query = "INSERT INTO filmu_sarasas (pavadinimas)
             VALUES ('$name')";
