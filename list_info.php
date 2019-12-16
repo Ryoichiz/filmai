@@ -89,7 +89,7 @@ if(isset($_POST['Trinti'])){
     //echo $filmo_id;
 
     $query = "DELETE FROM sarasas_filmas WHERE fk_filmas = '$filmo_id'";
-    $result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
+    //$result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
     $query_run1 =mysqli_query($conn,$query);
             if($query_run1){
                 echo '<script type="text/javascript"> alert("Filmas ištrintas") </script>';
