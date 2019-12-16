@@ -188,6 +188,30 @@ if(isset($_GET['ID'])){
                 <button class='button' type='submit' name='Komentuoti'>Sukurti Recenzija</button>
             </form>
         <div>
+
+        <?php
+            $sql_fetch_reviews = "SELECT * FROM recenzija WHERE fk_filmas = $ID";
+            $query_fetch_reviews = mysqli_query($conn,$sql_fetch_reviews);           
+        ?>
+
+        <table border="1" width="400">
+            <?php
+            while($review_row = mysqli_fetch_assoc($query_fetch_reviews))
+            {
+                $user_id = $review_row['fk_naudotojas'];
+                $sql_fetch_name = "SELECT naudotojas.vardas FROM naudotojas WHERE id = $user_id";
+                $query_fetch_name = mysqli_query($conn, $sql_fetch_name);
+                $table_name = mysqli_fetch_assoc($query_fetch_name);
+                echo "<tr>
+                <td>".$table_name['vardas']."</td> 
+                <td>".$review_row['komentaras']."</td>
+                </tr>";
+            }
+            ?>
+        
+            
+        </table>
+
     </div>
 	</body>
 </html> 
@@ -257,7 +281,6 @@ if(isset($_POST['Komentuoti'])){
     $insert_date = date("Y-m-d");
     if($insert_text != null){
         $sql_insert_review = "INSERT INTO recenzija (komentaras, sukurimo_data, fk_naudotojas, fk_filmas) VALUES ('$insert_text', '$insert_date', $id, $ID)";
-        echo $sql_insert_review;
         $query_insert_review = mysqli_query($conn,$sql_insert_review);
     }
 }
