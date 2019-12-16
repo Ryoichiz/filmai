@@ -57,6 +57,16 @@ if(isset($_GET['ID'])){
 
         $row = mysqli_fetch_array($result);
 
+        //IMDB ivertinimo gavimas
+
+        $imdb_key = 'http://www.omdbapi.com/?apikey=ff402839';
+        $imdb_title = '&t='. str_replace(' ','+', $row['pavadinimas']);
+        $imdb_year = '&y=' . $row['isleidimo_metai'];
+        $imdb_link = $imdb_key . $imdb_title . $imdb_year;
+
+        $imdb_json = file_get_contents($imdb_link);
+        $imdb_obj = json_decode($imdb_json);
+
         $discount = $row['fk_nuolaida'];
         $sql2 = "SELECT * FROM kodo_kurimas WHERE id='$discount'";
         $result2 = mysqli_query($conn, $sql2) or die ("Bad Querry: $sql2");
@@ -120,6 +130,7 @@ if(isset($_GET['ID'])){
         <div class='info_div'>
             <p>Trukmė: <?php echo $row['trukme'] ?></p>
             <p>Įvetinimas: <?php echo $row['ivertinimas'] ?></p>
+            <p>IMDB Įvetinimas: <?php echo $imdb_obj->imdbRating ?></p>
             <p>Metai: <?php echo $row['isleidimo_metai'] ?></p>
             <p>Žanrai: <?php foreach ($datas as $data) {
                 echo $data['pavadinimas']." ";
