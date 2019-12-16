@@ -63,6 +63,7 @@
          Atgal į [<a href="movie_list.php">Filmų sąrasą</a>]
       </td></tr>
     </table>
+
     <div>
     <?php
         if (mysqli_num_rows($result) > 0)
