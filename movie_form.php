@@ -17,9 +17,12 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+        $conn->set_charset("utf8");
 
         $sql = "SELECT * FROM filmas";
         $result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
+        $row = mysqli_fetch_array($result);
+        $apr = $row['aprasymas'];
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +36,7 @@
         <link rel="stylesheet" href="./styles/stylesheet.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-    <body>
+    <body style='background-color: whitesmoke'>
         <?php
         MainController::printTopBar("movies.php");
         ?>
@@ -52,7 +55,24 @@
             <br>
             <label>Pasirinkite filmo paveiksliuką</label>
             <br>
-            <input type="file" name="paveiksliukas" required >
+            <!-- initially hide image tag -->
+            <img src='uploads/<?php echo $row['paveiksliukas'] ?>' height="200" id="image">
+            <!-- passing this explicitly -->
+            <input type="file" name="paveiksliukas"  onchange="showImage.call(this)" required>
+            <script>
+                function showImage(){
+                    if(this.files && this.files[0]){
+                        var obj = new FileReader();
+                        obj.onload = function(data){
+                            var image = document.getElementById("image");
+                            image.src = data.target.result;
+                            image.style.display = "block";
+                        }
+                        obj.readAsDataURL(this.files[0]);
+                    }
+                }
+
+            </script>
             <br>
             <br>
             <p>Įveskite išleidimo metus</p>

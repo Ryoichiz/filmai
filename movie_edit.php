@@ -75,7 +75,7 @@
                     }
                 }
 
-            </script>>
+            </script>
             <br>
             <br>
             <p>Įveskite išleidimo metus</p>
@@ -96,7 +96,7 @@
             <br>
             <p>Nuorada iš Youtube platformos</p>
             <input type="text" size="45" name="anonsas" value="<?php echo $row['anonsas']; ?>" 
-             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=(\w)+$" required>
+             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=([a-zA-Z0-9!@#$%^&*\-+=])+$" required>
             <br>
             <br>
             <button class='button' type="submit" name="Pateikti">Pateikti</button>  

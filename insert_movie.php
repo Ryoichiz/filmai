@@ -53,10 +53,15 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }else{
-            $sql  = "INSERT INTO filmas (pavadinimas,isleidimo_metai,trukme,aprasymas,ivertinimas,kaina,paveiksliukas, anonsas)
+            $sql = "INSERT INTO filmas (pavadinimas,isleidimo_metai,trukme,aprasymas,ivertinimas,kaina,paveiksliukas, anonsas)
             VALUES ('$pavadinimas','$metai','$trukme','$aprasymas','0', '$kaina','$fileNameNew','$anonsas')";
-            if (!mysqli_query($conn, $sql)) {
-                 die ("Klaida įrašant:" .mysqli_error($conn));
-             }else echo "header(\"Location: movies.php?Įrašyta\")";
+            //$result = mysqli_query($conn, $sql) or die ("Bad Querry: $sql");
+            $query_run1 =mysqli_query($conn,$sql);
+            if($query_run1){
+                echo '<script type="text/javascript"> alert("Filmas įrašytas") </script>';
+                header("Location: movies.php");
+             }else{
+                echo '<script type="text/javascript"> alert("Bandykite dar karta.") </script>';
+             }
         }
 ?>
