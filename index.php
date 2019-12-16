@@ -33,7 +33,9 @@ $controller = new MainPageController();
             $controller->printPageView();
         ?>
                   <?php
+                  if($_SESSION['role'] !== "0")
             echo $_SESSION['role'];?></br><?php
+                  if($_SESSION['vardas'] !== "0")
             echo $_SESSION['vardas'];?></br><?php
           ?>
     </div>
