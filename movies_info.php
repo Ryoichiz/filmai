@@ -182,6 +182,10 @@ if(isset($_GET['ID'])){
             <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
             <iframe width="420" height="315" src='<?php echo $videourl ?>' allowfullscreen> </iframe> 
         </div>
+        <div>
+            <p>Aktoriai:</p>
+        </div>
+        
         <p></p>
         <div class='recenzijos' align="center">
             <form action="" method="POST">
