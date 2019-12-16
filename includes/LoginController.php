@@ -5,6 +5,7 @@ class LoginController extends MainController implements iController
     {
         parent::__construct();
     }
+
     public function printPageView()
     {
         if($_SESSION['busena'] === 'Užblokuotas' || $_SESSION['role'] >= 1)
@@ -21,7 +22,7 @@ class LoginController extends MainController implements iController
                 //$ip = $this->getModel()->getIP();
                 //$this->getModel()->updateLog("Vartotjas prijungtas prie sistemos!", $ip);
                 $this->getView()->printSuccess('Jūs prijungtas prie sistemos!');
-                $this->redirect_to_another_page('index.php', 0);
+                $this->redirect_to_another_page('index.php', 1);
             }
             else
             {

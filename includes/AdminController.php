@@ -7,6 +7,7 @@ class AdminController extends  MainController implements iController
     {
         parent::__construct();
     }
+
     public function printPageView()
     {
         if($_SESSION['role'] !== 'Administratorius' || $_SESSION['busena'] === 'Užblokuotas') {

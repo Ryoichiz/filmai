@@ -28,10 +28,8 @@ class UserController extends MainController implements iController
 
 
             if($this->getModel()->registerUser($username, $surname, $el_pastas, $password, $passwordRepeat, $date)) {
-                //$this->getModel()->updateLog("Registracija sėkminga!", $username);
                 $this->getView()->printSuccess('Registracija sėkminga!');
             } else {
-                //$this->getModel()->updateLog("Registracijos klaida", $username);
                 $this->getView()->printDanger('Klaida');
             }
         }

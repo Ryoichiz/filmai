@@ -8,6 +8,13 @@ class MainPageController extends MainController implements iController
         parent::__construct();
     }
 
+    public function Connection()
+    {
+        $controller = new model();
+        $conn = $controller->returnConn();
+        return $conn;
+    }
+
     public function getTitle()
     {
         echo 'Filmų - pagrindinis puslapis!';

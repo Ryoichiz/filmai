@@ -7,13 +7,6 @@ class DiscountController extends  MainController implements iController
         parent::__construct();
     }
 
-        public function Connection()
-    {
-        $controller = new model();
-        $conn = $controller->returnConn();
-        return $conn;
-    }
-
         public function printPageView()
     {
     	if($_SESSION['role'] !== "Naudotojas" && $_SESSION['role'] !== "Administratorius") {
