@@ -121,6 +121,7 @@ class AdminController extends  MainController implements iController
                 //$ip = $this->getModel()->getIP();
                 //$this->getModel()->updateLog(" Pakeitė sėkmingai ".$username['vardas']." slaptažodį", $ip);
                 $this->getView()->printSuccess('Slaptažodis sėkmingai pakeistas');
+                $this->redirect_to_another_page('admin.php', 0);
             } else {
                 //$ip = $this->getModel()->getIP();
                 //$this->getModel()->updateLog("Slaptažodžio keitimo klaida", $ip);
@@ -137,6 +138,7 @@ class AdminController extends  MainController implements iController
             //$ip = $this->getModel()->getIP();
             //$this->getModel()->updateLog(" Pakeitė sėkmingai ".$username['vardas']." duomenis", $ip);
             $this->printSuccess("Sėkmingai pakeisti duomenys");
+            $this->redirect_to_another_page('admin.php', 0);
         }
 
         $content = $this->getModel()->getDataByColumnFirst("naudotojas", 'id', $id);

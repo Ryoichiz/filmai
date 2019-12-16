@@ -109,7 +109,8 @@ if(isset($_POST['Pateikti'])){
             //$q2result = mysqli_query($conn, $query2) or die ("Bad Querry: $query2");
                 $query_run =mysqli_query($conn,$query2);
             if($query_run){
-                echo '<script type="text/javascript"> alert("Sukurtas nauajs sąrašas!Atnaujinkite puslapį.") </script>';
+                echo '<script type="text/javascript"> alert("Sukurtas nauajs sąrašas!.") </script>';
+                echo '<meta http-equiv="refresh" content="0; url=movie_list.php" />';
              }else{
                 echo '<script type="text/javascript"> alert("Nepavyko sukurti") </script>';
              }
@@ -126,6 +127,7 @@ if(isset($_POST['Trinti'])){
     $query_run2 =mysqli_query($conn,$querydelete);
             if($query_run2){
                 echo '<script type="text/javascript"> alert("Sąrašas ištrintas") </script>';
+                echo '<meta http-equiv="refresh" content="0; url=movie_list.php" />';
              }else{
                 echo '<script type="text/javascript"> alert("Bandykite dar karta.") </script>';
              }

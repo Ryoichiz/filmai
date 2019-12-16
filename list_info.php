@@ -82,17 +82,18 @@
 	</body>
 </html> 
 <?php 
-
 if(isset($_POST['Trinti'])){
 
     $filmo_id = $_POST['filmoid'];
     //echo $filmo_id;
 
-    $query = "DELETE FROM sarasas_filmas WHERE fk_filmas = '$filmo_id'";
+    $query = "DELETE FROM sarasas_filmas WHERE fk_filmas = '$filmo_id' AND fk_sarasas = '$ID'";
     //$result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
     $query_run1 =mysqli_query($conn,$query);
             if($query_run1){
                 echo '<script type="text/javascript"> alert("Filmas ištrintas") </script>';
+                echo '<meta http-equiv="refresh" content="0; url=list_info.php?ID='.$ID.'" />';
+                echo '"'.$filmo_id.'"';
              }else{
                 echo '<script type="text/javascript"> alert("Bandykite dar karta.") </script>';
              }

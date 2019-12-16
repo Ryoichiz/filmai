@@ -93,6 +93,7 @@ class DiscountController extends  MainController implements iController
                         if($this->getModel()->updateDataOneColumn("filmas",$id,"fk_nuolaida",$row['id']))
                         {
                             $this->getView()->printSuccess('Nuimta nuolaida');
+                            $this->redirect_to_another_page('moveis.php', 1);
                         }
                         else
                         {
