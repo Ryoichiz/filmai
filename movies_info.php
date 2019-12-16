@@ -149,8 +149,27 @@ if(isset($_GET['ID'])){
         </div>
         <div class='info_div'>
             <p>Trukmė: <?php echo $row['trukme'] ?></p>
-            <p>Įvetinimas: <?php echo $row['ivertinimas'] ?></p>
-            <p>Vartotojų įvetinimas: <?php echo $user_rating ?></p>
+            <p>Vartotojų įvetinimas: <?php echo $user_rating ?> 
+            <?php 
+            if($_SESSION['role'] == 'Naudotojas' || $_SESSION['role'] == 'Administratorius'){
+                ?>
+                <form action="" method="post">
+                    <select name='select_rating'>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                        <option value='6'>6</option>
+                        <option value='7'>7</option>
+                        <option value='8'>8</option>
+                        <option value='9'>9</option>
+                        <option value='10'>10</option>
+                    </select>
+                    <button class='button' type='submit' name='Ivertinti'>Ivertinti</button>
+                </form>
+            <?php } ?>
+            </p>
             <p>IMDB Įvetinimas: <?php echo $imdb_obj->imdbRating ?></p>
             <p>Metai: <?php echo $row['isleidimo_metai'] ?></p>
             <p>Žanrai: <?php foreach ($datas as $data) {
@@ -206,4 +225,24 @@ if(isset($_POST['Prideti'])){
         }
 
     }
+if(isset($_POST['Ivertinti'])){
+    $selected_rating = $_POST['select_rating'];
+    $sql_check = "SELECT ivertinimai.id FROM `ivertinimai` WHERE ivertinimai.fk_naudotojas = $id AND ivertinimai.id=$ID";
+    $reslut_check = mysqli_query($conn,$sql_check);
+    $check_array = array();
+
+    while($check = mysqli_fetch_array($reslut_check)){
+        $check_array[] = $check['id'];
+    }
+    echo $selected_rating;
+
+    if(count($check_array) == 0){
+        $sql_insert_user_rating = "INSERT INTO ivertinimai (id, fk_naudotojas, balas) VALUES ('$ID','$id','$selected_rating')";
+        $query_insert_user_rating = mysqli_query($conn,$sql_insert_user_rating);
+    }elseif(count($check_array) > 0){
+        $sql_update_rating = "UPDATE ivertinimai SET balas = $selected_rating WHERE fk_naudotojas = $id AND ivertinimai.id=$ID";
+        $query_update_rating = mysqli_query($conn,$sql_update_rating);
+    }
+
+}
 ?>
