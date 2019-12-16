@@ -59,9 +59,9 @@
             $query_run1 =mysqli_query($conn,$sql);
             if($query_run1){
                 echo '<script type="text/javascript"> alert("Filmas įrašytas") </script>';
-                header("Location: movies.php");
              }else{
                 echo '<script type="text/javascript"> alert("Bandykite dar karta.") </script>';
              }
+             header("Location: movies.php");
         }
 ?>

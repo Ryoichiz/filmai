@@ -71,7 +71,7 @@
             while($row = $movies->fetch_assoc())
             {
                 echo "<div class='film_form'><a href='list_info.php?ID={$row['id']}''><h5>{$row['pavadinimas']}</h5></a></div>";
-                echo '<div class=\'margin\'><form action="" method="POST"><input type="hidden" name="filmoid" value="'.$row['id'].'"><button class="delete_button" type="submit" name="Trinti">Trinti</button></form></div><br>';
+                echo '<div class=\'margin\'><form action="" method="POST"><input type="hidden" name="sarasoid" value="'.$row['id'].'"><button class="delete_button" type="submit" name="Trinti">Trinti</button></form></div><br>';
             }
         }else {
             echo "<h2>No Titles to display</h2>";
@@ -118,7 +118,7 @@ if(isset($_POST['Pateikti'])){
 
 if(isset($_POST['Trinti'])){
 
-    $saraso_id = $_POST['filmoid'];
+    $saraso_id = $_POST['sarasoid'];
     echo $saraso_id;
 
     $querydelete = "DELETE FROM filmu_sarasas WHERE id = '$saraso_id'";

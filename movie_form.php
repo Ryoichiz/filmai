@@ -93,7 +93,7 @@
             <br>
             <p>Nuorada iš Youtube platformos</p>
             <input type="text" size="45" name="anonsas" placeholder="pav. https://www.youtube.com/watch?v=JaRq73y5MJk" 
-             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=([a-zA-Z0-9!@#$%^&*\-+=])+$" required>
+             pattern="^(https:\/\/)?www.youtube.com\/watch\?v=([a-zA-Z0-9!@#$%^&*\_-+=])+$" required>
             <br>
             <br>
             <button class='button' type="submit" name="Pateikti">Pateikti</button>
