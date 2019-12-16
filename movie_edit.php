@@ -128,7 +128,7 @@
 
     if(in_array($fileActualExt, $allowed)){
         if($pav_err === 0){
-            if($pav_size < 1000000){
+            if($pav_size < 10000000){
                 $fileNameNew = uniqid('', true).".".$fileActualExt;
                 $fileDestination = 'uploads/'.$fileNameNew;
                 move_uploaded_file($pav_tmp_place, $fileDestination);
@@ -144,7 +144,7 @@
     }
 
         $query = "UPDATE filmas SET pavadinimas='$pavadinimas',isleidimo_metai='$metai',trukme='$trukme',aprasymas='$aprasymas',kaina='$kaina',paveiksliukas='$fileNameNew',anonsas='$anonsas' WHERE id='$ID'";
-
+        //$result = mysqli_query($conn, $query) or die ("Bad Querry: $query");
         $query_run =mysqli_query($conn,$query);
             if($query_run){
                 echo '<script type="text/javascript"> alert("Atnaujinta!") </script>';
