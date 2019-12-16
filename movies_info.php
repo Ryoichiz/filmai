@@ -182,19 +182,21 @@ if(isset($_GET['ID'])){
             <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
             <iframe width="420" height="315" src='<?php echo $videourl ?>' allowfullscreen> </iframe> 
         </div>
-        <div class='recenzijos'>
+        <p></p>
+        <div class='recenzijos' align="center">
             <form action="" method="POST">
                 <textarea name="komentaras" rows="4" cols="50"></textarea>
                 <button class='button' type='submit' name='Komentuoti'>Sukurti Recenzija</button>
             </form>
-        <div>
+        </div>
+        <div align="center" style="white-space:pre;">
 
         <?php
             $sql_fetch_reviews = "SELECT * FROM recenzija WHERE fk_filmas = $ID";
             $query_fetch_reviews = mysqli_query($conn,$sql_fetch_reviews);           
         ?>
 
-        <table border="1" width="400">
+        <table border="1" width="800">
             <?php
             while($review_row = mysqli_fetch_assoc($query_fetch_reviews))
             {
@@ -202,9 +204,31 @@ if(isset($_GET['ID'])){
                 $sql_fetch_name = "SELECT naudotojas.vardas FROM naudotojas WHERE id = $user_id";
                 $query_fetch_name = mysqli_query($conn, $sql_fetch_name);
                 $table_name = mysqli_fetch_assoc($query_fetch_name);
+
+
+                $review_id = $review_row['id'];
+                $sql_fetch_review_rating = "SELECT recenziju_vertinimas.ivertinimas FROM recenziju_vertinimas WHERE fk_recenzija = $review_id";
+                $query_fetch_review_rating = mysqli_query($conn, $sql_fetch_review_rating);
+                
+                $review_rating_array = array();
+                $review_sum = 0;
+
+                while($rating_review = mysqli_fetch_array($query_fetch_review_rating)){
+                    $review_rating_array[] = $rating_review['ivertinimas'];
+                }
+
+                if (count($review_rating_array) > 0)
+                {
+                    foreach($review_rating_array as $review_rating_value){
+                        $review_sum += $review_rating_value;
+                    }
+                }elseif(count($rating_array) == 0){
+                    $review_sum = 0;
+                }
+
                 echo "<tr>
-                <td>".$table_name['vardas']."</td> 
-                <td>".$review_row['komentaras']."</td>
+                <td width='30%'>".$table_name['vardas']."  (".$review_row['sukurimo_data'].")\nRecenzija patiko: ".$review_sum."</td> 
+                <td width='70%''>".$review_row['komentaras']."</td>
                 </tr>";
             }
             ?>
@@ -273,15 +297,16 @@ if(isset($_POST['Ivertinti'])){
         $sql_update_rating = "UPDATE ivertinimai SET balas = $selected_rating WHERE fk_naudotojas = $id AND ivertinimai.id=$ID";
         $query_update_rating = mysqli_query($conn,$sql_update_rating);
     }
-
 }
 
 if(isset($_POST['Komentuoti'])){
-    $insert_text = $_POST['komentaras'];
-    $insert_date = date("Y-m-d");
-    if($insert_text != null){
-        $sql_insert_review = "INSERT INTO recenzija (komentaras, sukurimo_data, fk_naudotojas, fk_filmas) VALUES ('$insert_text', '$insert_date', $id, $ID)";
-        $query_insert_review = mysqli_query($conn,$sql_insert_review);
+    if($_SESSION['role'] == 'Naudotojas' || $_SESSION['role'] == 'Administratorius'){
+        $insert_text = $_POST['komentaras'];
+        $insert_date = date("Y-m-d");
+        if($insert_text != null){
+            $sql_insert_review = "INSERT INTO recenzija (komentaras, sukurimo_data, fk_naudotojas, fk_filmas) VALUES ('$insert_text', '$insert_date', $id, $ID)";
+            $query_insert_review = mysqli_query($conn,$sql_insert_review);
+        }
     }
 }
 ?>
