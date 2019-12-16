@@ -47,6 +47,26 @@ if(isset($_GET['ID'])){
         WHERE filmas.id = '$ID' ";
         $result1 = mysqli_query($conn, $sql1) or die ("Bad Querry: $sql1");
 
+        $sql_fetch_user_ratings = "SELECT ivertinimai.balas FROM ivertinimai WHERE ivertinimai.id = $ID";
+        $result_user_ratings = mysqli_query($conn, $sql_fetch_user_ratings) or die ("Bad Querry: $sql_fetch_user_ratings");
+
+        $rating_array = array();
+        $user_rating = 0;
+
+        while($rating = mysqli_fetch_array($result_user_ratings)){
+            $rating_array[] = $rating['balas'];
+        }
+
+        if (count($rating_array) > 0)
+        {
+            foreach($rating_array as $rating_value){
+                $user_rating += $rating_value;
+            }
+            $user_rating = $user_rating / count($rating_array);
+        }elseif(count($rating_array) == 0){
+            $user_rating = 'No user ratings found.';
+        }
+
         $datas = array();
         if(mysqli_num_rows($result1) > 0){
             while ($row1= mysqli_fetch_assoc($result1)){
@@ -130,6 +150,7 @@ if(isset($_GET['ID'])){
         <div class='info_div'>
             <p>Trukmė: <?php echo $row['trukme'] ?></p>
             <p>Įvetinimas: <?php echo $row['ivertinimas'] ?></p>
+            <p>Vartotojų įvetinimas: <?php echo $user_rating ?></p>
             <p>IMDB Įvetinimas: <?php echo $imdb_obj->imdbRating ?></p>
             <p>Metai: <?php echo $row['isleidimo_metai'] ?></p>
             <p>Žanrai: <?php foreach ($datas as $data) {
