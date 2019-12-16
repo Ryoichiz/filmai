@@ -99,23 +99,23 @@ public static function printNavbar($location)
         echo '        <form method=\'POST\' class=\'mainForm\'>
             <div class="form-group">
                 <label for="inputFor">Slapyvardis*</label>
-                <input type="text" name="username" class="form-control" id="inputFor" placeholder="Vardas">
+                <input type="text" name="username" class="form-control" id="inputFor" placeholder="Vardas" required>
             </div>
             <div class="form-group">
                 <label for="inputFor">Pavardė</label>
-                <input type="text" name="surname" class="form-control" id="inputFor" placeholder="Pavardė">
+                <input type="text" name="surname" class="form-control" id="inputFor" placeholder="Pavardė" required>
             </div>
             <div class="form-group">
                 <label for="inputFor">El. pašto adresas*</label>
-                <input type="email" name="el_pastas" class="form-control" id="inputFor" aria-describedby="emailHelp" placeholder="El. Paštas">
+                <input type="email" name="el_pastas" class="form-control" id="inputFor" aria-describedby="emailHelp" placeholder="El. Paštas" required>
             </div>
             <div class="form-group">
                 <label for="inputFor">Slaptažodis*</label>
-                <input type="password" name="password" class="form-control" id="inputFor" placeholder="Slaptažodis">
+                <input type="password" name="password" patern="[a-zA-Z0-9!@#$%^&*\_-+=].{4,}" class="form-control" id="inputFor" title="Slaptažodį turi sudaryti bent 4 simboliai" placeholder="Slaptažodis" required>
             </div>
             <div class="form-group">
                 <label for="inputFor">Pakartoti slaptažodį*</label>
-                <input type="password" name="passwordRepeat" class="form-control" id="inputFor" placeholder="Pakartoti slaptažodį">
+                <input type="password" name="passwordRepeat" patern="[a-zA-Z0-9!@#$%^&*\_-+=].{4,}" class="form-control" id="inputFor" placeholder="Pakartoti slaptažodį" required>
 
             </div>
                 <button type="submit" name="registerButton" class="btn btn-primary">Registruotis</button>
@@ -160,11 +160,11 @@ public static function printNavbar($location)
         <form method="POST" class="mainForm">
             <div class="form-group">
                 <label for="inputFor">Slapyvardis</label>
-                <input name="username" type="text" class="form-control" id="inputFor" placeholder="Slapyvardis">
+                <input name="username" type="text" class="form-control" id="inputFor" placeholder="Slapyvardis" required>
             </div>
             <div class="form-group">
                 <label for="inputFor">Slaptažodis</label>
-                <input name="password" type="password" class="form-control" id="inputFor" placeholder="Slaptažodis">
+                <input name="password" type="password" class="form-control" patern="[a-zA-Z0-9!@#$%^&*\_-+=].{4,}"  id="inputFor" placeholder="Slaptažodis" required>
             </div>
                 <button type="submit" name="loginButton" class="btn btn-primary">Prisijungti</button>
                 <a href="remindpass.php">Pamiršai slaptažodį?</a>
@@ -187,12 +187,12 @@ public static function printNavbar($location)
                     <input type="text" class="form-control" id="inputFor" value="'.$username.'" disabled>
                 </div>
                 <div class="form-group">
-                    <label for="inputFor">Pavardė</label>
-                    <input type="text" name="surname" class="form-control" id="inputFor" placeholder="Pavardė" value="'.$surname.'">
+                    <label for="inputFor">Pavardė*</label>
+                    <input type="text" name="surname" class="form-control" id="inputFor" placeholder="Pavardė" value="'.$surname.'" required>
                 </div>
                 <div class="form-group">
                     <label for="inputFor">El. pašto adresas*</label>
-                    <input type="email" name="email" class="form-control" id="inputFor" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$email.'">
+                    <input type="email" name="email" class="form-control" id="inputFor" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$email.'" required>
                 </div>
                 </div>
                     <div class=\'container\'><button type="submit" name="saveSettingsBtn" class="btn btn-primary">Išsaugoti nustatymus</button></div><br>
@@ -205,15 +205,15 @@ public static function printNavbar($location)
                 <h1>Slaptažodžio keitimo forma</h1>
                 <div class="form-group">
                     <label for="inputFor">Dabartinis slaptažodis</label>
-                    <input type="password" name="oldPasswd" class="form-control" id="inputFor" placeholder="Senas slaptažodis">
+                    <input type="password" name="oldPasswd" patern="[a-zA-Z0-9!@#$%^&*\_-+=].{4,}" class="form-control" id="inputFor" placeholder="Senas slaptažodis" required>
                 </div>
                 <div class="form-group">
                     <label for="inputFor">Naujas slaptažodis</label>
-                    <input type="password" name="newPasswd" class="form-control" id="inputFor" placeholder="Naujas slaptažodis">
+                    <input type="password" name="newPasswd" patern="[a-zA-Z0-9!@#$%^&*\_-+=].{4,}" class="form-control" id="inputFor" placeholder="Naujas slaptažodis" required>
                 </div>
                 <div class="form-group">
                     <label for="inputFor">Pakartokite naują slaptažodį</label>
-                    <input type="password"  name="repeatNewPasswd" class="form-control" id="inputFor" placeholder="Naujas slaptažodis">
+                    <input type="password"  name="repeatNewPasswd" patern="[a-zA-Z0-9!@#$%^&*\_-+=].{4,}" class="form-control" id="inputFor" placeholder="Naujas slaptažodis" required>
                 </div>
                 <button type="submit" name="changePasswdBtn" class="btn btn-danger">Keisti slaptažodį</button>
             </form></div>';
@@ -321,11 +321,11 @@ public static function printNavbar($location)
             </div>
                 <div class="form-group">
                 <label for="inputFor">Pavardė</label>
-                <input type="text" class="form-control" id="inputFor" name="pavarde" placeholder="Pavardė" value="'.$content['pavarde'].'">
+                <input type="text" patern="" class="form-control" id="inputFor" name="pavarde" placeholder="Pavardė" value="'.$content['pavarde'].'" required>
                 </div>
             <div class="form-group">
                 <label for="inputFor">El. pašto adresas*</label>
-                <input type="email" class="form-control" id="inputFor" name="el_pastas" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$content['el_pastas'].'">
+                <input type="email" class="form-control" id="inputFor" name="el_pastas" aria-describedby="emailHelp" placeholder="El. Paštas" value="'.$content['el_pastas'].'" required>
             </div>
 
                 <button type="submit" name="request" value="visiDuomenys" class="btn btn-primary">Išsaugoti nustatymus</button>
