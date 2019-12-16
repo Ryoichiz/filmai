@@ -56,7 +56,7 @@ class DiscountController extends  MainController implements iController
             }
                 $id = $this->getModel()->secureInput($id);
                 $row = $this->getModel()->getDataByString('filmas', 'id', $id);
-                if ($row['fk_nuolaida'] !== NULL)
+                if ($row['fk_nuolaida'] !== NULL && $row['fk_nuolaida'] !== "4")
                 {
                     $row2 = $this->getModel()->getDataByColumnFirst('kodo_kurimas', 'id', $row['fk_nuolaida']);
                     $this->getView()->printDiscountWith($row2['kodas'], $row2['procentas']);
