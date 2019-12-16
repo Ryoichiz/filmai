@@ -182,6 +182,12 @@ if(isset($_GET['ID'])){
             <?php $videourl = str_replace("watch?v=", "embed/",$row['anonsas']); ?>
             <iframe width="420" height="315" src='<?php echo $videourl ?>' allowfullscreen> </iframe> 
         </div>
+        <div class='recenzijos'>
+            <form action="" method="POST">
+                <textarea name="komentaras" rows="4" cols="50"></textarea>
+                <button class='button' type='submit' name='Komentuoti'>Sukurti Recenzija</button>
+            </form>
+        <div>
     </div>
 	</body>
 </html> 
@@ -225,6 +231,7 @@ if(isset($_POST['Prideti'])){
         }
 
     }
+
 if(isset($_POST['Ivertinti'])){
     $selected_rating = $_POST['select_rating'];
     $sql_check = "SELECT ivertinimai.id FROM `ivertinimai` WHERE ivertinimai.fk_naudotojas = $id AND ivertinimai.id=$ID";
@@ -234,7 +241,6 @@ if(isset($_POST['Ivertinti'])){
     while($check = mysqli_fetch_array($reslut_check)){
         $check_array[] = $check['id'];
     }
-    echo $selected_rating;
 
     if(count($check_array) == 0){
         $sql_insert_user_rating = "INSERT INTO ivertinimai (id, fk_naudotojas, balas) VALUES ('$ID','$id','$selected_rating')";
@@ -244,5 +250,15 @@ if(isset($_POST['Ivertinti'])){
         $query_update_rating = mysqli_query($conn,$sql_update_rating);
     }
 
+}
+
+if(isset($_POST['Komentuoti'])){
+    $insert_text = $_POST['komentaras'];
+    $insert_date = date("Y-m-d");
+    if($insert_text != null){
+        $sql_insert_review = "INSERT INTO recenzija (komentaras, sukurimo_data, fk_naudotojas, fk_filmas) VALUES ('$insert_text', '$insert_date', $id, $ID)";
+        echo $sql_insert_review;
+        $query_insert_review = mysqli_query($conn,$sql_insert_review);
+    }
 }
 ?>
